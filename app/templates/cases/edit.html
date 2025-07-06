@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Case | Law Firm CMS{% endblock %}
+
+{% block additional_css %}
+<style>
+    .form-section {
+        margin-bottom: 2rem;
+    }
+    .form-section-title {
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .required-field::after {
+        content: "*";
+        color: red;
+        margin-left: 0.25rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        {% include "partials/sidebar.html" %}
+        
+        <!-- Main content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ url_for('cases.index') }}">Cases</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url_for('cases.view', id=case.id) }}">{{ case.title }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                    </ol>
+                </nav>
+            </div>
+            
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Case</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('cases.edit', id=case.id) }}">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="form-section">
+                            <h4 class="form-section-title">Case Information</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <label for="title" class="form-label required-field">Case Title</label>
+                                    {{ form.title(class="form-control " + ("is-invalid" if form.title.errors else "")) }}
+                                    {% if form.title.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.title.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="case_number" class="form-label">Case Number</label>
+                                    {{ form.case_number(class="form-control") }}
+                                    <small class="form-text text-muted">Court assigned case number</small>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="type" class="form-label">Case Type</label>
+                                    {{ form.type(class="form-select") }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="status" class="form-label">Status</label>
+                                    {{ form.status(class="form-select") }}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                {{ form.description(class="form-control", rows=4) }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h4 class="form-section-title">Court Information</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="court_name" class="form-label">Court Name</label>
+                                    {{ form.court_name(class="form-control") }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="judge_name" class="form-label">Judge Name</label>
+                                    {{ form.judge_name(class="form-control") }}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="opposing_counsel" class="form-label">Opposing Counsel</label>
+                                {{ form.opposing_counsel(class="form-control") }}
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="filing_date" class="form-label">Filing Date</label>
+                                    {{ form.filing_date(class="form-control", type="date") }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="hearing_date" class="form-label">Hearing Date</label>
+                                    {{ form.hearing_date(class="form-control", type="date") }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h4 class="form-section-title">Financial Information</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="hourly_rate" class="form-label">Hourly Rate ($)</label>
+                                    {{ form.hourly_rate(class="form-control") }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="retainer_amount" class="form-label">Retainer Amount ($)</label>
+                                    {{ form.retainer_amount(class="form-control") }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h4 class="form-section-title">Assignments</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="client_id" class="form-label required-field">Client</label>
+                                    {{ form.client_id(class="form-select " + ("is-invalid" if form.client_id.errors else "")) }}
+                                    {% if form.client_id.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.client_id.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lead_attorney_id" class="form-label required-field">Lead Attorney</label>
+                                    {{ form.lead_attorney_id(class="form-select " + ("is-invalid" if form.lead_attorney_id.errors else "")) }}
+                                    {% if form.lead_attorney_id.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.lead_attorney_id.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{{ url_for('cases.view', id=case.id) }}" class="btn btn-secondary">
+                                <i class="fas fa-times me-1"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i> Update Case
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

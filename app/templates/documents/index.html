@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Documents{% endblock %}
+
+{% block content %}
+{% for doc in documents %}
+  <!-- now doc is a single Document object -->
+  <a href="{{ url_for('documents.view') }}">View</a>
+{% endfor %}
+{% endblock %}
+

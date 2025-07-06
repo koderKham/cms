@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+
+{% block title %}Create Client | Law Firm CMS{% endblock %}
+
+{% block additional_css %}
+<style>
+    .form-section {
+        margin-bottom: 2rem;
+    }
+    .form-section-title {
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .required-field::after {
+        content: "*";
+        color: red;
+        margin-left: 0.25rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        {% include "partials/sidebar.html" %}
+        
+        <!-- Main content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ url_for('clients.index') }}">Clients</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Create New Client</li>
+                    </ol>
+                </nav>
+            </div>
+            
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-user-plus me-2"></i>Create New Client</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('clients.create') }}">
+                        {{ form.hidden_tag() }}
+                        
+                        <!-- Client Type Selection -->
+                        <div class="form-section">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="client_type" class="form-label">Client Type</label>
+                                    {{ form.client_type(class="form-select", onchange="toggleClientTypeFields()") }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Basic Information -->
+                        <div class="form-section">
+                            <h4 class="form-section-title">Basic Information</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label required-field">Name</label>
+                                    {{ form.name(class="form-control " + ("is-invalid" if form.name.errors else ""), placeholder="Full name for individual or contact name for business") }}
+                                    {% if form.name.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.name.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 business-field">
+                                    <label for="company_name" class="form-label">Company/Organization Name</label>
+                                    {{ form.company_name(class="form-control") }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    {{ form.email(class="form-control " + ("is-invalid" if form.email.errors else ""), type="email") }}
+                                    {% if form.email.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.email.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    {{ form.phone(class="form-control") }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Address Information -->
+                        <div class="form-section">
+                            <h4 class="form-section-title">Address</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="address" class="form-label">Street Address</label>
+                                    {{ form.address(class="form-control") }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="city" class="form-label">City</label>
+                                    {{ form.city(class="form-control") }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="state" class="form-label">State/Province</label>
+                                    {{ form.state(class="form-control") }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="postal_code" class="form-label">Postal Code</label>
+                                    {{ form.postal_code(class="form-control") }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="country" class="form-label">Country</label>
+                                    {{ form.country(class="form-control", value="United States") }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Individual Specific Fields -->
+                        <div id="individual-fields" class="form-section">
+                            <h4 class="form-section-title">Personal Information</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="date_of_birth" class="form-label">Date of Birth</label>
+                                    {{ form.date_of_birth(class="form-control", type="date") }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="ssn_last_four" class="form-label">Last 4 Digits of SSN</label>
+                                    {{ form.ssn_last_four(class="form-control", maxlength="4", placeholder="1234") }}
+                                    <small class="form-text text-muted">For identification purposes only</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Business Specific Fields -->
+                        <div id="business-fields" class="form-section">
+                            <h4 class="form-section-title">Business Information</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="industry" class="form-label">Industry</label>
+                                    {{ form.industry(class="form-control") }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="tax_id" class="form-label">Tax ID / EIN</label>
+                                    {{ form.tax_id(class="form-control", placeholder="XX-XXXXXXX") }}
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="website" class="form-label">Website</label>
+                                    {{ form.website(class="form-control", type="url", placeholder="https://example.com") }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional Information -->
+                        <div class="form-section">
+                            <h4 class="form-section-title">Additional Information</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="referral_source" class="form-label">Referral Source</label>
+                                    {{ form.referral_source(class="form-control") }}
+                                    <small class="form-text text-muted">How did this client hear about us?</small>
+                                </div>
+                                <div class="col-md-6 pt-4">
+                                    <div class="form-check">
+                                        {{ form.is_active(class="form-check-input", checked=true) }}
+                                        <label class="form-check-label" for="is_active">Active Client</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="notes" class="form-label">Notes</label>
+                                    {{ form.notes(class="form-control", rows=4) }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{{ url_for('clients.index') }}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-1"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i> Save Client
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block additional_js %}
+<script>
+    function toggleClientTypeFields() {
+        const clientType = document.getElementById('client_type').value;
+        const individualFields = document.getElementById('individual-fields');
+        const businessFields = document.getElementById('business-fields');
+        
+        if (clientType === 'individual') {
+            individualFields.style.display = 'block';
+            businessFields.style.display = 'none';
+        } else {
+            individualFields.style.display = 'none';
+            businessFields.style.display = 'block';
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleClientTypeFields();
+    });
+</script>
+{% endblock %}

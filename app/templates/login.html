@@ -1,0 +1,170 @@
+{% extends "base_auth.html" %}
+
+{% block title %}Login | Law Firm CMS{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-logo">
+        <i class="fas fa-balance-scale"></i> Law Firm CMS
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <ul class="nav nav-tabs mb-3" id="authTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link {% if not active_tab or active_tab == 'login' %}active{% endif %}"
+                            id="login-tab" data-bs-toggle="tab" data-bs-target="#login"
+                            type="button" role="tab" aria-selected="true">Login</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link {% if active_tab == 'register' %}active{% endif %}"
+                            id="register-tab" data-bs-toggle="tab" data-bs-target="#register"
+                            type="button" role="tab" aria-selected="false">Register</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="authTabsContent">
+                <!-- Login Form -->
+                <div class="tab-pane fade {% if not active_tab or active_tab == 'login' %}show active{% endif %}"
+                     id="login" role="tabpanel">
+
+                    {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+
+                    <form id="login-form" method="post" action="{{ url_for('auth.login') }}">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            Login
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div class="tab-pane fade {% if active_tab == 'register' %}show active{% endif %}"
+                     id="register" role="tabpanel">
+
+                    {% if reg_error %}
+                    <div class="alert alert-danger">
+                        {{ reg_error }}
+                    </div>
+                    {% endif %}
+
+                    <form id="register-form" method="post" action="{{ url_for('auth.register') }}">
+                        <div class="mb-3">
+                            <label for="regName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="regName" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="regEmail" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="regPassword" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regConfirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="regConfirmPassword" name="confirmPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="regRole" class="form-label">Role</label>
+                            <select class="form-select" id="regRole" name="role" required>
+                                <option value="attorney">Attorney</option>
+                                <option value="paralegal">Paralegal</option>
+                                <option value="staff">Staff</option>
+                                <option value="admin">Administrator</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            Register
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-3 text-muted">
+        <small>© 2025 Law Firm CMS | Current Time: 2025-06-21 21:38:26</small>
+    </div>
+</div>
+
+<script>
+    // Ensure the correct tab is active on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if active_tab == 'register' %}
+        const registerTab = document.getElementById('register-tab');
+        if (registerTab) {
+            const tabTrigger = new bootstrap.Tab(registerTab);
+            tabTrigger.show();
+        }
+        {% endif %}
+    });
+    <!-- Add this to the bottom of your login.html file -->
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Form-based login redirection is handled by the server
+
+    // For API/JSON login (if you're using fetch or axios)
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            // Only handle if you're using JavaScript to submit the form
+            if (loginForm.dataset.useApi !== 'true') {
+                return; // Let the form submit normally to the server
+            }
+
+            e.preventDefault();
+
+            const formData = new FormData(loginForm);
+            const data = {
+                email: formData.get('email'),
+                password: formData.get('password'),
+                rememberMe: formData.get('rememberMe') === 'on'
+            };
+
+            fetch('/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                    console.log("Login successful, redirecting to:", data.redirect || "/dashboard");
+                    window.location.href = data.redirect || "/dashboard";
+                } else {
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'alert alert-danger';
+                    errorMsg.textContent = data.error || 'Login failed';
+                    loginForm.prepend(errorMsg);
+                }
+            })
+            .catch(error => {
+                console.error('Login error:', error);
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'alert alert-danger';
+                errorMsg.textContent = 'An error occurred during login. Please try again.';
+                loginForm.prepend(errorMsg);
+            });
+        });
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,8 @@
+% extends "base.html" %}
+{% block title %}Documents{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('documents.edit', docs=docs) }}" class="btn btn-warning">Edit</a>
+<a href="{{ url_for('documents.delete', docs=docs) }}" class="btn btn-danger">Delete</a>
+
+{% endblock %}

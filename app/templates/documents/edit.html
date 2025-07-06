@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Edit Document{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Edit Document</h1>
+    <form method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.title.label }} {{ form.title(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.description.label }} {{ form.description(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            <label>Current File: <a href="{{ url_for('documents.download', id=doc.id) }}">{{ doc.file_path }}</a></label><br>
+            {{ form.file.label }} {{ form.file(class="form-control") }}
+            <small>(Leave blank to keep current file)</small>
+        </div>
+        <div class="mb-3">
+            {{ form.person_id.label }} {{ form.person_id(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.case_id.label }} {{ form.case_id(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.event_id.label }} {{ form.event_id(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Update Document</button>
+        <a href="{{ url_for('documents.view', id=doc.id) }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
