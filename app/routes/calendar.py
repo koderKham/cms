@@ -22,6 +22,20 @@ def index():
 def add_event():
     form = EventForm()
     if form.validate_on_submit():
+        # Handle duration conversion from string to timedelta
+        duration = None
+        if form.duration.data:
+            try:
+                # Parse duration string (e.g., "2:30:00" for 2 hours 30 minutes)
+                time_parts = form.duration.data.split(':')
+                if len(time_parts) == 3:
+                    from datetime import timedelta
+                    duration = timedelta(hours=int(time_parts[0]), 
+                                       minutes=int(time_parts[1]), 
+                                       seconds=int(time_parts[2]))
+            except (ValueError, IndexError):
+                duration = None
+        
         event = Event(
             title=form.title.data,
             description=form.description.data,
@@ -29,7 +43,14 @@ def add_event():
             datetime=form.datetime.data,
             case_id=form.case_id.data or None,
             client_id=form.client_id.data or None,
-            document_id=form.document_id.data or None
+            document_id=form.document_id.data or None,
+            location=form.location.data,
+            duration=duration,
+            status=form.status.data,
+            priority=form.priority.data,
+            is_recurring=form.is_recurring.data,
+            recurrence_pattern=form.recurrence_pattern.data,
+            notify_before=form.notify_before.data
         )
         db.session.add(event)
         db.session.commit()
@@ -42,7 +63,31 @@ def add_event():
 def edit_event(event_id):
     event = Event.query.get_or_404(event_id)
     form = EventForm(obj=event)
+    
+    # Set duration field for display if event has duration
+    if event.duration and form.duration.data is None:
+        # Convert timedelta back to string format for form display
+        total_seconds = int(event.duration.total_seconds())
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        seconds = total_seconds % 60
+        form.duration.data = f"{hours}:{minutes:02d}:{seconds:02d}"
+    
     if form.validate_on_submit():
+        # Handle duration conversion from string to timedelta
+        duration = None
+        if form.duration.data:
+            try:
+                # Parse duration string (e.g., "2:30:00" for 2 hours 30 minutes)
+                time_parts = form.duration.data.split(':')
+                if len(time_parts) == 3:
+                    from datetime import timedelta
+                    duration = timedelta(hours=int(time_parts[0]), 
+                                       minutes=int(time_parts[1]), 
+                                       seconds=int(time_parts[2]))
+            except (ValueError, IndexError):
+                duration = None
+        
         event.title = form.title.data
         event.description = form.description.data
         event.event_type = form.event_type.data
@@ -50,6 +95,13 @@ def edit_event(event_id):
         event.case_id = form.case_id.data or None
         event.client_id = form.client_id.data or None
         event.document_id = form.document_id.data or None
+        event.location = form.location.data
+        event.duration = duration
+        event.status = form.status.data
+        event.priority = form.priority.data
+        event.is_recurring = form.is_recurring.data
+        event.recurrence_pattern = form.recurrence_pattern.data
+        event.notify_before = form.notify_before.data
         db.session.commit()
         flash('Event updated successfully!', 'success')
         return redirect(url_for('calendar.index'))
