@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Manage Fee{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Manage Fee for {{ case.name }}</h1>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label for="fee_type" class="form-label">Fee Type</label>
+            <select class="form-select" id="fee_type" name="fee_type" required>
+                <option value="Flat" {% if current_fee and current_fee.fee_type == 'Flat' %}selected{% endif %}>Flat</option>
+                <option value="Billable" {% if current_fee and current_fee.fee_type == 'Billable' %}selected{% endif %}>Billable</option>
+                <option value="Contingent" {% if current_fee and current_fee.fee_type == 'Contingent' %}selected{% endif %}>Contingent</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Flat Fee Amount</label>
+            <input type="number" step="0.01" class="form-control" id="amount" name="amount" {% if current_fee and current_fee.fee_type != 'Flat' %}disabled{% endif %} value="{{ current_fee.amount if current_fee else '' }}">
+        </div>
+        <div class="mb-3">
+            <label for="hourly_rate" class="form-label">Hourly Rate</label>
+            <input type="number" step="0.01" class="form-control" id="hourly_rate" name="hourly_rate" {% if current_fee and current_fee.fee_type != 'Billable' %}disabled{% endif %} value="{{ current_fee.hourly_rate if current_fee else '' }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Save Fee</button>
+    </form>
+</div>
+{% endblock %}

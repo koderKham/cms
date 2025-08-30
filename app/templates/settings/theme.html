@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Theme Preferences{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Theme Preferences</h1>
+    <form method="POST">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="mode" id="light_mode" value="light" {% if theme.mode == 'light' %}checked{% endif %}>
+            <label class="form-check-label" for="light_mode">
+                Light Mode
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="mode" id="dark_mode" value="dark" {% if theme.mode == 'dark' %}checked{% endif %}>
+            <label class="form-check-label" for="dark_mode">
+                Dark Mode
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Save Preferences</button>
+    </form>
+</div>
+<!-- Debugging: Display user_settings -->
+<pre>{{ user_settings | tojson }}</pre>
+{% endblock %}

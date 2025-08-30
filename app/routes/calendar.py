@@ -63,3 +63,14 @@ def delete_event(event_id):
     db.session.commit()
     flash('Event deleted successfully!', 'success')
     return redirect(url_for('calendar.index'))
+
+from flask import render_template
+from datetime import datetime
+from app.utils.calendar_helper import get_month_days
+
+@calendar_bp.route('/calendar/')
+@login_required
+def calendar():
+    # Simulate no events
+    events = {}  # Empty dictionary if no events exist
+    return render_template('calendar/index.html', events=events)

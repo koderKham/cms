@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Settings</h1>
+    <ul class="list-group">
+        <li class="list-group-item"><a href="{{ url_for('settings.profile') }}">Profile Settings</a></li>
+        <li class="list-group-item"><a href="{{ url_for('settings.notifications') }}">Notification Preferences</a></li>
+        <li class="list-group-item"><a href="{{ url_for('settings.theme') }}">Theme Preferences</a></li>
+        <li class="list-group-item"><a href="{{ url_for('settings.security') }}">Security Settings</a></li>
+    </ul>
+</div>
+{% endblock %}

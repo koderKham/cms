@@ -14,7 +14,7 @@
 
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link {% if request.path == url_for('main.dashboard') %}active{% endif %}" href="{{ url_for('main.dashboard') }}">
+                <a class="nav-link {% if request.path == url_for('main.dashboard') %}active{% endif %}" href="{{ url_for('main.index') }}">
                     <i class="fas fa-tachometer-alt me-2"></i> Dashboard
                 </a>
             </li>
@@ -36,6 +36,16 @@
             <li class="nav-item">
                 <a class="nav-link {% if request.path.startswith('/documents') %}active{% endif %}" href="{{ url_for('documents.index') }}">
                     <i class="fas fa-file-alt me-2"></i> Documents
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.path.startswith('/billing') %}active{% endif %}" href="{{ url_for('billing.index') }}">
+                    <i class="fas fa-file-alt me-2"></i> Billing
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.path.startswith('/documents') %}active{% endif %}" href="{{ url_for('documents.index') }}">
+                    <i class="fas fa-file-alt me-2"></i> Settings
                 </a>
             </li>
         </ul>

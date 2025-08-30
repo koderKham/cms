@@ -15,8 +15,13 @@ class User(UserMixin, db.Model):
     phone = db.Column(db.String(20))
     avatar = db.Column(db.String(200))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    #updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     last_login = db.Column(db.DateTime)
 
+    notes = db.relationship('Note', backref='user', lazy=True)
+    cases = db.relationship('Case', backref='user', lazy=True)
+    documents = db.relationship('Document', backref='user', lazy=True)
+    events = db.relationship('Event', secondary='user_event', back_populates='users')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

@@ -9,14 +9,17 @@ from app import db  # adjust import as needed
 class Event(db.Model):
     __tablename__ = 'events'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(140), nullable=False)
-    description = db.Column(db.Text, nullable=True)
-    event_type = db.Column(db.String(50), nullable=False)
-    datetime = db.Column(db.DateTime, nullable=False)
-    case_id = db.Column(db.Integer, db.ForeignKey('cases.id'), nullable=True)
-    client_id = db.Column(db.Integer, db.ForeignKey('clients.id'), nullable=True)
-    document_id = db.Column(db.Integer, db.ForeignKey('documents.id'), nullable=True)
-    created_at = db.Column(db.DateTime, nullable=False, default=db.DateTime)
+    name = db.Column(db.String(255), nullable=False)
+    time_length = db.Column(db.String(100))
+    deadline = db.Column(db.Boolean, default=False)
+    deadline_datetime = db.Column(db.DateTime)
+    completed = db.Column(db.Boolean, default=False)
+
+    cases = db.relationship('Case', secondary='case_event', back_populates='events')
+    clients = db.relationship('Client', secondary='client_event', back_populates='events')
+    documents = db.relationship('Document', backref='event', lazy=True)
+    users = db.relationship('User', secondary='user_event', back_populates='events')
+    notes = db.relationship('Note', backref='event', lazy=True)
 
     @classmethod
     def create_event(cls, title, description, event_type, datetime_value, case_id=None, client_id=None, document_id=None):

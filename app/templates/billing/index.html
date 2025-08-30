@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Billing{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Billing Overview</h1>
+
+    {% for case in cases %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ case.name }}</h5>
+                <p class="card-text">
+                    <strong>Fees:</strong>
+                    {% for fee in fees if fee.case_id == case.id %}
+                        {{ fee.fee_type }} - 
+                        {% if fee.fee_type == 'Flat' %}
+                            ${{ "%.2f" | format(fee.amount) }}
+                        {% elif fee.fee_type == 'Billable' %}
+                            ${{ "%.2f" | format(fee.hourly_rate) }}/hour
+                        {% else %}
+                            Contingent Fee
+                        {% endif %}
+                    {% endfor %}
+                </p>
+                <p class="card-text">
+                    <strong>Expenses:</strong>
+                    ${{ "%.2f" | format(expenses | selectattr('case_id', 'equalto', case.id) | map(attribute='amount') | sum) }}
+                </p>
+                <p class="card-text">
+                    <strong>Payments:</strong>
+                    ${{ "%.2f" | format(payments | selectattr('case_id', 'equalto', case.id) | map(attribute='amount') | sum) }}
+                </p>
+                <a href="{{ url_for('billing.manage_fee', case_id=case.id) }}" class="btn btn-primary btn-sm">Manage Fee</a>
+                <a href="{{ url_for('billing.record_expense', case_id=case.id) }}" class="btn btn-secondary btn-sm">Record Expense</a>
+                <a href="{{ url_for('billing.record_payment', case_id=case.id) }}" class="btn btn-success btn-sm">Record Payment</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+body.light {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.dark {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* Add any additional theme-specific styles here */

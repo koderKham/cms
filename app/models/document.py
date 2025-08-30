@@ -23,9 +23,11 @@ class Document(db.Model):
     person_id = db.Column(db.Integer, db.ForeignKey('persons.id'), nullable=True)
     case_id = db.Column(db.Integer, db.ForeignKey('cases.id'), nullable=True)
 
-    person = db.relationship('Person', backref='documents')
-    case = db.relationship('Case', backref='documents')
-    #event = db.relationship('Event', backref='documents')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    case_id = db.Column(db.Integer, db.ForeignKey('case.id'))
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
+    notes = db.relationship('Note', backref='document', lazy=True)
 
 
     def to_dict(self):

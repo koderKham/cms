@@ -1,8 +1,11 @@
-% extends "base.html" %}
-{% block title %}Documents{% endblock %}
+{% extends "base.html" %}
+{% block title %}View Document{% endblock %}
 
 {% block content %}
-<a href="{{ url_for('documents.edit', docs=docs) }}" class="btn btn-warning">Edit</a>
-<a href="{{ url_for('documents.delete', docs=docs) }}" class="btn btn-danger">Delete</a>
-
+<div class="container mt-4">
+    <h1 class="mb-4">Document: {{ document.filename }}</h1>
+    <p><strong>Category:</strong> {{ document.category }}</p>
+    
+    <a href="{{ url_for('documents.index') }}" class="btn btn-secondary">Back to Documents</a>
+</div>
 {% endblock %}

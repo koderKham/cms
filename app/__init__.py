@@ -44,6 +44,17 @@ def create_app(config_class=Config):
     def inject_now():
         return {'now': datetime.utcnow()}
 
+    #theme loader
+    @app.context_processor
+    def inject_user_settings():
+        # Replace this with actual database or session data
+        user_settings = {
+            'theme': {'mode': 'light'},
+            'profile': {'name': 'John Doe', 'email': 'john.doe@example.com'},
+            # Add more settings as needed
+        }
+        return dict(user_settings=user_settings)
+
     # Register blueprints
 
     # Add this to your create_app function where other blueprints are registered
@@ -66,8 +77,17 @@ def create_app(config_class=Config):
     from app.routes.calendar import calendar_bp
     app.register_blueprint(calendar_bp, url_prefix='/calendar')
 
+    from app.routes.notes import notes_bp
+    app.register_blueprint(notes_bp, url_prefix='/notes')
+
     from app.routes.documents import documents_bp
     app.register_blueprint(documents_bp, url_prefix='/documents')
+
+    from app.routes.billing import billing_bp
+    app.register_blueprint(billing_bp, url_prefix='/billing')
+
+    from app.routes.settings import settings_bp
+    app.register_blueprint(settings_bp, url_prefix='/settings')
 
     # Register error handlers
     @app.errorhandler(404)
@@ -87,3 +107,4 @@ def create_app(config_class=Config):
             app.logger.error(f"Error creating database tables: {e}")
 
     return app
+

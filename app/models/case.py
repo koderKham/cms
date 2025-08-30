@@ -53,12 +53,12 @@ class Case(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # Relationships
-    client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
-    lead_attorney_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    # Define relationships with backref
-    lead_attorney = db.relationship('User', backref='assigned_cases', foreign_keys=[lead_attorney_id])
-
+    notes = db.relationship('Note', backref='case', lazy=True)
+    events = db.relationship('Event', secondary='case_event', back_populates='cases')
+    documents = db.relationship('Document', backref='case', lazy=True)
     # We'll add more relationships later (documents, activities, notes)
 
     def __repr__(self):

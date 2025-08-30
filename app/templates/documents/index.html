@@ -2,9 +2,66 @@
 {% block title %}Documents{% endblock %}
 
 {% block content %}
-{% for doc in documents %}
-  <!-- now doc is a single Document object -->
-  <a href="{{ url_for('documents.view') }}">View</a>
-{% endfor %}
-{% endblock %}
+<div class="container mt-4">
+    <h1 class="mb-4">Documents</h1>
 
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Collapsible Upload Form -->
+    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#uploadForm" aria-expanded="false" aria-controls="uploadForm">
+        Upload a File
+    </button>
+    <div class="collapse" id="uploadForm">
+        <form method="POST" enctype="multipart/form-data" class="mb-4">
+            <div class="mb-3">
+                <label for="file" class="form-label">Upload Document</label>
+                <input type="file" class="form-control" id="file" name="file" required>
+            </div>
+            <div class="mb-3">
+                <label for="case" class="form-label">Select Case</label>
+                <select class="form-select" id="case" name="case" required>
+                    <option value="">Select a case</option>
+                    {% for case in cases %}
+                        <option value="{{ case.id }}">{{ case.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="document_type" class="form-label">Document Type</label>
+                <select class="form-select" id="document_type" name="document_type" required>
+                    <option value="">Select a document type</option>
+                    {% for doc_type in document_types %}
+                        <option value="{{ doc_type }}">{{ doc_type }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success">Upload</button>
+        </form>
+    </div>
+
+    <!-- List of Recently Uploaded Documents -->
+    <h2>Recently Uploaded Documents</h2>
+    {% if documents %}
+        <ul class="list-group">
+            {% for doc in documents[:10] %} <!-- Display only the 10 most recent documents -->
+                <li class="list-group-item">
+                    <strong>{{ doc.filename }}</strong>
+                    (Type: {{ doc.document_type }}, Case: {{ cases | selectattr('id', 'equalto', doc.case_id) | map(attribute='name') | first }})
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No documents uploaded yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

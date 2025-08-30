@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Custom theme CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
     {% block additional_css %}{% endblock %}
 </head>
 <body>
@@ -98,6 +100,13 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Custom JS -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // Apply the theme class to the <body> element on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const theme = "{{ user_settings['theme']['mode'] }}";  // Get the user's theme from the backend
+            document.body.className = theme;  // Apply the theme class
+        });
+    </script>
     {% block additional_js %}{% endblock %}
 </body>
 </html>

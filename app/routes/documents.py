@@ -1,104 +1,80 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash, send_from_directory, current_app
-from flask_login import login_required
-from werkzeug.utils import secure_filename
-from app import db
-from app.models.document import Document
-from app.forms.document import DocumentForm
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 import os
 
-documents_bp = Blueprint('documents', __name__)
+# Define the blueprint
+documents_bp = Blueprint('documents', __name__, template_folder='templates', static_folder='static')
 
-@documents_bp.route('/')
-@login_required
+# Simulated in-memory storage (replace with database in production)
+documents = []
+recently_viewed = []
+
+# Route to display the index page with recently viewed documents
+@documents_bp.route('/documents/', methods=['GET', 'POST'])
 def index():
-    Document.query.order_by(Document.uploaded_at.desc()).all()
-    doc = Document.query.order_by(Document.uploaded_at.desc()).all()
-    return render_template('documents/index.html', doc=doc)
+    document_types = ['Notice', 'Motion', 'Letter', 'Court Document', 'Other']
+    cases = [
+        {'id': 1, 'name': 'Case A'},
+        {'id': 2, 'name': 'Case B'},
+        {'id': 3, 'name': 'Case C'}
+    ]
 
-@documents_bp.route('/add', methods=['GET', 'POST'])
-@login_required
-def add():
-    form = DocumentForm()
-    if form.validate_on_submit():
-        # Handle file upload
-        file = form.file.data
-        filename = secure_filename(file.filename)
-        upload_dir = os.path.join(current_app.root_path, 'uploads')
-        os.makedirs(upload_dir, exist_ok=True)
-        file_path = os.path.join(upload_dir, filename)
-        file.save(file_path)
-        # Only one association allowed
-        associations = [form.person_id.data, form.case_id.data, form.event_id.data]
-        if sum(1 for x in associations if x) != 1:
-            flash('Associate the document with exactly one of Person, Case, or Event.', 'danger')
-            return render_template('documents/add.html', form=form)
-        doc = Document(
-            title=form.title.data,
-            description=form.description.data,
-            file_path=filename,
-            person_id=form.person_id.data if form.person_id.data else None,
-            case_id=form.case_id.data if form.case_id.data else None,
-            event_id=form.event_id.data if form.event_id.data else None,
-        )
-        db.session.add(doc)
-        db.session.commit()
-        flash('Document uploaded.', 'success')
-        return redirect(url_for('documents.index'))
-    return render_template('documents/add.html', form=form)
-
-@documents_bp.route('/<int:id>')
-@login_required
-def view(id):
-    doc = Document.query.get_or_404(id)
-    return render_template('documents/view.html', doc=doc)
-
-@documents_bp.route('/<int:id>/download')
-@login_required
-def download(id):
-    doc = Document.query.get_or_404(id)
-    upload_dir = os.path.join(current_app.root_path, 'uploads')
-    return send_from_directory(upload_dir, doc.file_path, as_attachment=True)
-
-# Add edit and delete routes as needed
-@documents_bp.route('/<int:id>/edit', methods=['GET', 'POST'])
-@login_required
-def edit(id):
-    doc = Document.query.get_or_404(id)
-    form = DocumentForm(obj=doc)
-    if form.validate_on_submit():
-        # Only one association allowed
-        associations = [form.person_id.data, form.case_id.data, form.event_id.data]
-        if sum(1 for x in associations if x) != 1:
-            flash('Associate the document with exactly one of Person, Case, or Event.', 'danger')
-            return render_template('documents/edit.html', form=form, doc=doc)
-        doc.title = form.title.data
-        doc.description = form.description.data
-        doc.person_id = form.person_id.data if form.person_id.data else None
-        doc.case_id = form.case_id.data if form.case_id.data else None
-        doc.event_id = form.event_id.data if form.event_id.data else None
-        # If a new file is uploaded, replace it
-        if form.file.data:
-            from werkzeug.utils import secure_filename
-            import os
-            file = form.file.data
-            filename = secure_filename(file.filename)
-            upload_dir = os.path.join(current_app.root_path, 'uploads')
-            os.makedirs(upload_dir, exist_ok=True)
-            file_path = os.path.join(upload_dir, filename)
-            file.save(file_path)
-            doc.file_path = filename
-        db.session.commit()
-        flash('Document updated!', 'success')
-        return redirect(url_for('documents.view', id=doc.id))
-    return render_template('documents/edit.html', form=form, doc=doc)
-
-@documents_bp.route('/<int:id>/delete', methods=['GET', 'POST'])
-@login_required
-def delete(id):
-    doc = Document.query.get_or_404(id)
     if request.method == 'POST':
-        db.session.delete(doc)
-        db.session.commit()
-        flash('Document deleted.', 'success')
-        return redirect(url_for('documents.index'))
-    return render_template('documents/delete.html', doc=doc)
+        # Handle file upload
+        file = request.files.get('file')
+        case_id = request.form.get('case')
+        document_type = request.form.get('document_type')
+
+        if file and case_id and document_type:
+            document = {
+                'filename': file.filename,
+                'case_id': int(case_id),
+                'document_type': document_type
+            }
+            documents.insert(0, document)  # Add to the beginning of the list to ensure it's recent
+            flash(f"Document '{file.filename}' uploaded successfully!", 'success')
+            return redirect(url_for('documents.index'))
+        else:
+            flash("Please provide all required fields.", 'danger')
+
+    return render_template('documents/index.html', cases=cases, documents=documents, document_types=document_types)
+
+# Route to handle document upload
+@documents_bp.route('/documents/upload', methods=['GET', 'POST'])
+def upload():
+    categories = ['Court Document', 'Invoice', 'Letter', 'Contract', 'Report']  # Example categories
+    if request.method == 'POST':
+        # Process uploaded file
+        file = request.files.get('file')
+        category = request.form.get('category')
+
+        if file and category:
+            # Simulate saving the document (replace with actual file storage logic)
+            document = {
+                'filename': file.filename,
+                'category': category
+            }
+            documents.append(document)
+
+            # Redirect to index page
+            flash(f"Document '{file.filename}' uploaded successfully!", 'success')
+            return redirect(url_for('documents.index'))
+        else:
+            flash("Please provide both a file and a category.", 'danger')
+
+    return render_template('documents/upload.html', categories=categories)
+
+# Route to view a specific document
+@documents_bp.route('/documents/view/<filename>')
+def view(filename):
+    # Simulated logic for viewing a document
+    for doc in documents:
+        if doc['filename'] == filename:
+            # Add document to recently viewed (if not already there)
+            if doc not in recently_viewed:
+                recently_viewed.insert(0, doc)  # Add to the start of the list
+            # Limit recently viewed list to 10 items
+            if len(recently_viewed) > 10:
+                recently_viewed.pop()
+            return render_template('documents/view.html', document=doc)
+    flash(f"Document '{filename}' not found.", 'danger')
+    return redirect(url_for('documents.index'))

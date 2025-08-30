@@ -46,7 +46,10 @@ class Client(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # Relationships
-    cases = db.relationship('Case', backref='client', lazy='dynamic')
+    cases = db.relationship('Case', backref='client', lazy=True)
+    documents = db.relationship('Document', backref='client', lazy=True)
+    events = db.relationship('Event', secondary='client_event', back_populates='clients')
+    notes = db.relationship('Note', backref='client', lazy=True)
 
     @hybrid_property
     def full_address(self):

@@ -10,6 +10,7 @@ class Person(db.Model):
     phone = db.Column(db.String(20), unique=True, nullable=True)
     address = db.Column(db.String(255), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # ... rest as above ...
 

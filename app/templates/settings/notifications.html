@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Notification Preferences{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Notification Preferences</h1>
+    <form method="POST">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="email_notifications" name="email_notifications" {% if notifications.email_notifications %}checked{% endif %}>
+            <label class="form-check-label" for="email_notifications">
+                Enable Email Notifications
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="system_alerts" name="system_alerts" {% if notifications.system_alerts %}checked{% endif %}>
+            <label class="form-check-label" for="system_alerts">
+                Enable System Alerts
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Save Preferences</button>
+    </form>
+</div>
+{% endblock %}
