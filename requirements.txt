@@ -1,0 +1,8 @@
+Flask>=2.2
+Flask-SQLAlchemy>=3.0
+Flask-Login
+Flask-WTF
+Flask-Migrate
+Jinja2
+python-dotenv
+werkzeug

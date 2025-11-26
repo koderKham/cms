@@ -1,0 +1,12 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>{% if doc %}Edit{% else %}Create{% endif %} Document</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">{{ form.filename.label }}{{ form.filename(class="form-control") }}</div>
+    <div class="mb-3">{{ form.client_id.label }}{{ form.client_id(class="form-select") }}</div>
+    <div class="mb-3">{{ form.case_id.label }}{{ form.case_id(class="form-select") }}</div>
+    <div class="mb-3">{{ form.file.label }}{{ form.file(class="form-control") }}</div>
+    <div>{{ form.submit(class="btn btn-primary") }}</div>
+  </form>
+{% endblock %}

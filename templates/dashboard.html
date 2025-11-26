@@ -1,0 +1,98 @@
+{% extends "base_team.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block team_content %}
+  <h2>Welcome, {{ user.name }}!</h2>
+  {% if user.is_superuser() %}
+    <p>You are the super user. <a href="{{ url_for('approve_users') }}">Approve new users</a></p>
+  {% else %}
+    <p>Your role: {{ user.role.value }}</p>
+    {% if not user.is_active %}
+      <p><span class="text-danger">Your account is awaiting approval.</span></p>
+    {% endif %}
+  {% endif %}
+
+  <hr>
+
+  <!-- Weekly Calendar -->
+  <h3>This Week's Calendar</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        {% for day in week_days %}
+          <th>{{ day.strftime('%A') }}<br>{{ day.strftime('%Y-%m-%d') }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for day in week_days %}
+          <td>
+            {% set day_events = weekly_events | selectattr('event_datetime', '>=', day) | selectattr('event_datetime', '<', day + timedelta(days=1)) | list %}
+            {% for event in day_events %}
+              <div>
+                <a href="{{ url_for('event_detail', event_id=event.id) }}">{{ event.name }}</a>
+                <span class="text-muted">{{ event.event_datetime.strftime('%H:%M') }}</span>
+                {% if event.deadline %}<span class="badge bg-warning text-dark">Deadline</span>{% endif %}
+                {% if event.completed %}<span class="badge bg-success">Completed</span>{% endif %}
+              </div>
+            {% else %}
+              <small class="text-muted">No events</small>
+            {% endfor %}
+          </td>
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Widgets: Recent Cases / Documents / Notes (moved under calendar) -->
+  <div class="row mb-4 mt-4">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">Recent Cases</div>
+        <ul class="list-group list-group-flush">
+          {% for case in recent_cases %}
+            <li class="list-group-item">
+              <a href="{{ url_for('case_detail', case_id=case.id) }}">{{ case.style }}</a>
+              <div><small class="text-muted">{{ case.case_number }} • {{ case.created_at.strftime('%Y-%m-%d') if case.created_at else '' }}</small></div>
+            </li>
+          {% else %}
+            <li class="list-group-item"><small class="text-muted">No recent cases</small></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">Recent Documents</div>
+        <ul class="list-group list-group-flush">
+          {% for doc in recent_documents %}
+            <li class="list-group-item">
+              <a href="{{ url_for('document_detail', doc_id=doc.id) }}">{{ doc.filename }}</a>
+              <div><small class="text-muted">{{ doc.uploaded_at.strftime('%Y-%m-%d') if doc.uploaded_at else '' }}</small></div>
+            </li>
+          {% else %}
+            <li class="list-group-item"><small class="text-muted">No recent documents</small></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">Recent Notes</div>
+        <ul class="list-group list-group-flush">
+          {% for note in recent_notes %}
+            <li class="list-group-item">
+              <a href="{{ url_for('note_detail', note_id=note.id) }}">{{ (note.note or note.content)[:80] }}</a>
+              <div><small class="text-muted">by {{ note.user.name if note.user else 'Unknown' }} • {{ note.created_at.strftime('%Y-%m-%d') }}</small></div>
+            </li>
+          {% else %}
+            <li class="list-group-item"><small class="text-muted">No recent notes</small></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

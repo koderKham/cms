@@ -1,0 +1,7 @@
+{% extends "base_team.html" %}
+{% block title %}Team Dashboard{% endblock %}
+{% block team_content %}
+    <h2>Welcome, {{ user.name }}!</h2>
+    <p>Your role: {{ user.role.value|capitalize }}</p>
+    <p>Use the navigation above and sidebar for quick access.</p>
+{% endblock %}

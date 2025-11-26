@@ -1,0 +1,13 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>{{ event.name }}</h2>
+  <p><strong>Date/Time:</strong> {{ event.event_datetime.strftime('%Y-%m-%d %H:%M') }}</p>
+  <p><strong>Time Length:</strong> {{ event.time_length }}</p>
+  <p><strong>Deadline:</strong> {% if event.deadline %}Yes{% else %}No{% endif %}</p>
+  <p><strong>Deadline Date/Time:</strong> {{ event.deadline_datetime.strftime('%Y-%m-%d %H:%M') if event.deadline_datetime else 'N/A' }}</p>
+  <p><strong>Completed:</strong> {% if event.completed %}Yes{% else %}No{% endif %}</p>
+  <p><strong>Case:</strong> {{ event.case.style if event.case else 'N/A' }}</p>
+  <p><strong>Client:</strong> {{ event.client.name if event.client else 'N/A' }}</p>
+  <p><strong>Document:</strong> {{ event.document.filename if event.document else 'N/A' }}</p>
+  <p><strong>User:</strong> {{ event.user.name if event.user else 'N/A' }}</p>
+{% endblock %}

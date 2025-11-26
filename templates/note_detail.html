@@ -1,0 +1,11 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>Note Details</h2>
+  <p><strong>Note:</strong> {{ note.note }}</p>
+  <p><strong>Date Made:</strong> {{ note.date_made.strftime('%Y-%m-%d %H:%M') }}</p>
+  <p><strong>User:</strong> {{ note.user.name }}</p>
+  <p><strong>Case/Matter:</strong> {{ note.case.style if note.case else "N/A" }}</p>
+  <p><strong>Client:</strong> {{ note.client.name if note.client else "N/A" }}</p>
+  <p><strong>Event:</strong> {{ note.event.title if note.event else "N/A" }}</p>
+  <p><strong>Document:</strong> {{ note.document.filename if note.document else "N/A" }}</p>
+{% endblock %}

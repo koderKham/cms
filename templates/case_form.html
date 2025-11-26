@@ -1,0 +1,221 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>{% if case %}Edit Case{% else %}Create Case{% endif %}</h2>
+
+  <form method="post">
+    {{ form.hidden_tag() }}
+{% for cf in custom_fields %}
+  <div class="mb-3">
+    {% set fname = 'custom_' + cf.slug %}
+    {% if getattr(form, fname, None) %}
+      {{ getattr(form, fname).label(class="form-label") }}
+      {{ getattr(form, fname)(class="form-control") }}
+      {% if getattr(form, fname).description %}
+        <div class="form-text">{{ getattr(form, fname).description }}</div>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endfor %}
+    <div class="mb-3">
+      {{ form.case_type.label(class="form-label") }}
+      {{ form.case_type(class="form-select", id="case_type_select") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.style.label(class="form-label") }}
+      {{ form.style(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.case_number.label(class="form-label") }}
+      {{ form.case_number(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.judge.label(class="form-label") }}
+      {{ form.judge(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.filed_date.label(class="form-label") }}
+      {{ form.filed_date(class="form-control") }}
+    </div>
+
+    <!-- PERSONAL INJURY -->
+    <div id="personal_injury_fields" class="case-type-section" style="display:none;">
+      <h5>Personal Injury Details</h5>
+      <div class="mb-3">
+        {{ form.injuries.label(class="form-label") }}
+        {{ form.injuries(class="form-control", rows=4) }}
+      </div>
+      <div class="mb-3">
+        {{ form.accident_date.label(class="form-label") }}
+        {{ form.accident_date(class="form-control") }}
+      </div>
+      <div class="mb-3">
+        {{ form.accident_location.label(class="form-label") }}
+        {{ form.accident_location(class="form-control") }}
+      </div>
+      <div class="mb-3">
+        {{ form.treating_physicians.label(class="form-label") }}
+        {{ form.treating_physicians(class="form-control", rows=3) }}
+      </div>
+      <div class="mb-3">
+        {{ form.medical_record_refs.label(class="form-label") }}
+        {{ form.medical_record_refs(class="form-control", rows=2) }}
+      </div>
+      <div class="mb-3">
+        {{ form.lost_wages.label(class="form-label") }}
+        {{ form.lost_wages(class="form-control") }}
+      </div>
+      <div class="mb-3">
+        {{ form.insurance_info.label(class="form-label") }}
+        {{ form.insurance_info(class="form-control", rows=2) }}
+      </div>
+      <div class="mb-3">
+        {{ form.settlement_amount.label(class="form-label") }}
+        {{ form.settlement_amount(class="form-control") }}
+      </div>
+    </div>
+
+    <!-- CRIMINAL -->
+    <div id="criminal_fields" class="case-type-section" style="display:none;">
+      <h5>Criminal Case Details</h5>
+      <div class="mb-3">
+        {{ form.defendant.label(class="form-label") }}
+        {{ form.defendant(class="form-control") }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.co_defendants.label(class="form-label") }}
+        <div>
+          {% for val, label in form.co_defendants.choices %}
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="{{ form.co_defendants.name }}" value="{{ val }}" {% if form.co_defendants.data == val %}checked{% endif %}>
+              <span class="form-check-label">{{ label }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="mb-3">
+        {{ form.jurisdiction.label(class="form-label") }}
+        {{ form.jurisdiction(class="form-select") }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.retained_date.label(class="form-label") }}
+        {{ form.retained_date(class="form-control") }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.arresting_agency.label(class="form-label") }}
+        {{ form.arresting_agency(class="form-control") }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.case_status.label(class="form-label") }}
+        {{ form.case_status(class="form-select") }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.charges.label(class="form-label") }}
+        {{ form.charges(class="form-control", rows=5) }}
+      </div>
+    </div>
+
+    <!-- ESTATE / PROBATE -->
+    <div id="estate_fields" class="case-type-section" style="display:none;">
+      <h5>Estate / Probate Details</h5>
+      <div class="mb-3">
+        {{ form.decedent_name.label(class="form-label") }}
+        {{ form.decedent_name(class="form-control") }}
+      </div>
+      <div class="mb-3">
+        {{ form.date_of_death.label(class="form-label") }}
+        {{ form.date_of_death(class="form-control") }}
+      </div>
+      <div class="mb-3">
+        {{ form.will_present.label(class="form-label") }}
+        <div>
+          {% for val, label in form.will_present.choices %}
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="{{ form.will_present.name }}" value="{{ val }}" {% if form.will_present.data == val %}checked{% endif %}>
+              <span class="form-check-label">{{ label }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="mb-3">
+        {{ form.executor_name.label(class="form-label") }}
+        {{ form.executor_name(class="form-control") }}
+      </div>
+      <div class="mb-3">
+        {{ form.beneficiaries.label(class="form-label") }}
+        {{ form.beneficiaries(class="form-control", rows=3) }}
+      </div>
+      <div class="mb-3">
+        {{ form.estate_value.label(class="form-label") }}
+        {{ form.estate_value(class="form-control") }}
+      </div>
+      <div class="mb-3">
+        {{ form.probate_case_number.label(class="form-label") }}
+        {{ form.probate_case_number(class="form-control") }}
+      </div>
+    </div>
+
+    <!-- OTHER / GENERAL -->
+    <div id="other_fields" class="case-type-section" style="display:none;">
+      <h5>Other Matter Details</h5>
+      <div class="mb-3">
+        {{ form.matter_description.label(class="form-label") }}
+        {{ form.matter_description(class="form-control", rows=4) }}
+      </div>
+      <div class="mb-3">
+        {{ form.opposing_party.label(class="form-label") }}
+        {{ form.opposing_party(class="form-control") }}
+      </div>
+      <div class="mb-3">
+        {{ form.priority.label(class="form-label") }}
+        {{ form.priority(class="form-select") }}
+      </div>
+      <div class="mb-3">
+        {{ form.court.label(class="form-label") }}
+        {{ form.court(class="form-control") }}
+      </div>
+    </div>
+
+    <div class="mb-3">
+      {{ form.client_id.label(class="form-label") }}
+      {{ form.client_id(class="form-select") }}
+    </div>
+    <div class="mb-3">
+      {{ form.user_id.label(class="form-label") }}
+      {{ form.user_id(class="form-select") }}
+    </div>
+
+    <button class="btn btn-primary">{{ form.submit.label.text }}</button>
+    <a href="{{ url_for('cases_list') }}" class="btn btn-secondary ms-2">Cancel</a>
+  </form>
+
+  <script>
+    (function(){
+      const typeSelect = document.getElementById('case_type_select');
+      const sections = {
+        'personal_injury': document.getElementById('personal_injury_fields'),
+        'criminal': document.getElementById('criminal_fields'),
+        'estate': document.getElementById('estate_fields'),
+        'other': document.getElementById('other_fields')
+      };
+      function showSectionForType(type){
+        Object.values(sections).forEach(s => { if(s) s.style.display = 'none'; });
+        if(type && sections[type]) sections[type].style.display = '';
+      }
+      if(typeSelect){
+        showSectionForType(typeSelect.value);
+        typeSelect.addEventListener('change', function(){ showSectionForType(this.value); });
+      }
+    })();
+  </script>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+  <h2>Welcome to the Law Firm CMS</h2>
+  <p>Please <a href="{{ url_for('signup') }}">Sign Up</a> or <a href="{{ url_for('login') }}">Log In</a>.</p>
+{% endblock %}

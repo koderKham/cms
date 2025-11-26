@@ -1,0 +1,43 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>Cases</h2>
+  <form method="get" class="mb-3 d-flex">
+    <input type="text" name="search" class="form-control me-2" placeholder="Search by style or case number..." value="{{ search }}">
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a href="{{ url_for('cases_list') }}" class="btn btn-secondary ms-2">Clear</a>
+  </form>
+  <a href="{{ url_for('case_create') }}" class="btn btn-primary mb-3">New Case</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Style/Name</th>
+        <th>Case Number</th>
+        <th>Judge</th>
+        <th>Filed Date</th>
+        <th>Type</th>
+        <th>Client</th>
+        <th>Assigned User</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for case in cases %}
+      <tr>
+        <td><a href="{{ url_for('case_detail', case_id=case.id) }}">{{ case.style }}</a></td>
+        <td>{{ case.case_number }}</td>
+        <td>{{ case.judge }}</td>
+        <td>{{ case.filed_date }}</td>
+        <td>{{ case.case_type }}</td>
+        <td>{{ case.client.name }}</td>
+        <td>{{ case.user.name }}</td>
+        <td>
+          <a href="{{ url_for('case_edit', case_id=case.id) }}" class="btn btn-sm btn-secondary">Edit</a>
+          <form action="{{ url_for('case_delete', case_id=case.id) }}" method="POST" style="display:inline;">
+            <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Delete this case?')">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

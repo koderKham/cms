@@ -1,0 +1,22 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>{{ client.name }}</h2>
+  <p><strong>Email:</strong> {{ client.email }}</p>
+  <p><strong>Address:</strong> {{ client.address }}</p>
+  <h4>Cases/Matters</h4>
+  <ul>
+    {% for case in cases %}
+      <li><a href="{{ url_for('case_edit', case_id=case.id) }}">{{ case.style }} ({{ case.case_number }})</a></li>
+    {% else %}
+      <li>No cases.</li>
+    {% endfor %}
+  </ul>
+  <h4>Documents</h4>
+  <ul>
+    {% for doc in documents %}
+      <li>{{ doc.filename }}</li>
+    {% else %}
+      <li>No documents.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

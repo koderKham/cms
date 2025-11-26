@@ -1,0 +1,20 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>Templates</h2>
+  <a href="{{ url_for('template_create') }}" class="btn btn-primary mb-3">Create Template</a>
+  <div class="list-group">
+    {% for t in templates %}
+      <a class="list-group-item list-group-item-action" href="{{ url_for('template_edit', template_id=t.id) }}">
+        <strong>{{ t.name }}</strong>
+        <div class="small text-muted">Last updated: {{ t.updated_at.strftime('%Y-%m-%d') if t.updated_at else '' }}</div>
+      </a>
+    {% else %}
+      <div class="alert alert-info">No templates yet.</div>
+    {% endfor %}
+  </div>
+  <div class="mb-3">
+    <a href="{{ url_for('document_create') }}" class="btn btn-primary">New Document</a>
+    <a href="{{ url_for('documents_generate') }}" class="btn btn-success ms-2">Generate Document</a>
+    <a href="{{ url_for('templates_list') }}" class="btn btn-outline-secondary ms-2">Templates</a>
+  </div>
+{% endblock %}

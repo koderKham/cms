@@ -1,0 +1,12 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>{{ case.style }}</h2>
+  <p><strong>Case Number:</strong> {{ case.case_number }}</p>
+  <p><strong>Judge:</strong> {{ case.judge }}</p>
+  <p><strong>Filed Date:</strong> {{ case.filed_date }}</p>
+  <p><strong>Type:</strong> {{ case.case_type }}</p>
+  <p><strong>Client:</strong> {{ case.client.name }}</p>
+  <p><strong>Assigned User:</strong> {{ case.user.name }}</p>
+  <a href="{{ url_for('documents_generate_for_case', case_id=case.id) }}" class="btn btn-success">Generate Documents</a>
+  <!-- Add related Notes, Documents, Events etc. here -->
+{% endblock %}

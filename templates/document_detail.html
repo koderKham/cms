@@ -1,0 +1,9 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>{{ doc.filename }}</h2>
+  <p><strong>Client:</strong> {{ doc.client.name if doc.client else "N/A" }}</p>
+  <p><strong>Case:</strong> {{ doc.case.style if doc.case else "N/A" }}</p>
+  <p><strong>Uploaded:</strong> {{ doc.uploaded_at.strftime('%Y-%m-%d') }}</p>
+  <p><strong>Last Viewed:</strong> {{ doc.last_viewed_at.strftime('%Y-%m-%d') if doc.last_viewed_at else "Never" }}</p>
+  <p><a href="{{ doc.filepath }}" target="_blank" class="btn btn-info">View Document</a></p>
+{% endblock %}

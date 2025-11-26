@@ -1,0 +1,15 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>{% if note %}Edit{% else %}Create{% endif %} Note</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">{{ form.note.label }}{{ form.note(class="form-control") }}</div>
+    <div class="mb-3">{{ form.date_made.label }}{{ form.date_made(class="form-control") }}</div>
+    <div class="mb-3">{{ form.user_id.label }}{{ form.user_id(class="form-select") }}</div>
+    <div class="mb-3">{{ form.case_id.label }}{{ form.case_id(class="form-select") }}</div>
+    <div class="mb-3">{{ form.client_id.label }}{{ form.client_id(class="form-select") }}</div>
+    <div class="mb-3">{{ form.event_id.label }}{{ form.event_id(class="form-select") }}</div>
+    <div class="mb-3">{{ form.document_id.label }}{{ form.document_id(class="form-select") }}</div>
+    <div>{{ form.submit(class="btn btn-primary") }}</div>
+  </form>
+{% endblock %}

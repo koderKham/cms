@@ -1,0 +1,22 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>Generate Document</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      {{ form.template_id.label(class="form-label") }}
+      {{ form.template_id(class="form-select") }}
+    </div>
+    <div class="mb-3">
+      {{ form.case_id.label(class="form-label") }}
+      {{ form.case_id(class="form-select") }}
+    </div>
+    <div class="mb-3">
+      {{ form.filename.label(class="form-label") }}
+      {{ form.filename(class="form-control") }}
+      <div class="form-text">Filename will be saved as .html in uploads/documents</div>
+    </div>
+    <button class="btn btn-primary">{{ form.submit.label.text }}</button>
+    <a href="{{ url_for('documents_list') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}

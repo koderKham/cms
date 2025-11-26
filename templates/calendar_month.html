@@ -1,0 +1,47 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+<form method="get" class="mb-3 d-flex">
+    <input type="text" name="search" class="form-control me-2" placeholder="Search by event name..." value="{{ search }}">
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a href="{{ url_for('events_list') }}" class="btn btn-secondary ms-2">Clear</a>
+  </form>
+
+{% set month_names = [
+  '', 'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+] %}
+
+<h2>{{ month_names[month] }} {{ year }} Calendar</h2>
+
+<table class="table table-bordered calendar">
+  <thead>
+    <tr>
+      <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for week in month_days %}
+    <tr>
+      {% for day in week %}
+      <td>
+        {% if day > 0 %}
+          <strong>{{ day }}</strong>
+          <ul class="event-list">
+            {% for event in events_by_day.get(day, []) %}
+              <li>
+                <a href="{{ url_for('event_detail', event_id=event.id) }}">{{ event.name }}</a>
+                {% if event.deadline %}<span class="badge bg-warning text-dark">Deadline</span>{% endif %}
+                {% if event.completed %}<span class="badge bg-success">Completed</span>{% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{{ url_for('event_create') }}" class="btn btn-primary">Add Event</a>
+<a href="{{ url_for('events_list') }}" class="btn btn-secondary">All Events</a>
+{% endblock %}

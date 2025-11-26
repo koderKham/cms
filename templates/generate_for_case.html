@@ -1,0 +1,28 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>Generate Documents for: {{ case.style }} ({{ case.case_number }})</h2>
+  <p>Client: {{ case.client.name if case.client else 'N/A' }} • Case Type: {{ case.case_type }}</p>
+
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      {{ form.case_id(class="form-select", readonly=True) }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Select documents to generate</label>
+      <div class="list-group">
+        {% for value, label in form.doc_types.choices %}
+          <label class="list-group-item">
+            <input type="checkbox" name="{{ form.doc_types.name }}" value="{{ value }}">
+            {{ label }}
+            <a href="{{ url_for('documents_preview_template', template_slug=value, case_id=case.id) }}" class="btn btn-sm btn-outline-secondary ms-2">Preview</a>
+          </label>
+        {% endfor %}
+      </div>
+    </div>
+
+    <button class="btn btn-primary">{{ form.submit.label.text }}</button>
+    <a href="{{ url_for('document_detail', doc_id=case.documents[-1].id) if case.documents else url_for('documents_list') }}" class="btn btn-secondary ms-2">Cancel</a>
+  </form>
+{% endblock %}

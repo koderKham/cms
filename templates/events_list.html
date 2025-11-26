@@ -1,0 +1,48 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>All Events</h2>
+  <form method="get" class="mb-3 d-flex">
+    <input type="text" name="search" class="form-control me-2" placeholder="Search by event name..." value="{{ search }}">
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a href="{{ url_for('events_list') }}" class="btn btn-secondary ms-2">Clear</a>
+  </form>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date/Time</th>
+      <th>Time Length</th>
+      <th>Deadline</th>
+      <th>Deadline Date/Time</th>
+      <th>Completed</th>
+      <th>Case</th>
+      <th>Client</th>
+      <th>Document</th>
+      <th>User</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for event in events %}
+    <tr>
+      <td><a href="{{ url_for('event_detail', event_id=event.id) }}">{{ event.name }}</a></td>
+      <td>{{ event.event_datetime.strftime('%Y-%m-%d %H:%M') }}</td>
+      <td>{{ event.time_length }}</td>
+      <td>{% if event.deadline %}Yes{% else %}No{% endif %}</td>
+      <td>{{ event.deadline_datetime.strftime('%Y-%m-%d %H:%M') if event.deadline_datetime else '' }}</td>
+      <td>{% if event.completed %}Yes{% else %}No{% endif %}</td>
+      <td>{{ event.case.style if event.case else '' }}</td>
+      <td>{{ event.client.name if event.client else '' }}</td>
+      <td>{{ event.document.filename if event.document else '' }}</td>
+      <td>{{ event.user.name if event.user else '' }}</td>
+      <td>
+        <a href="{{ url_for('event_edit', event_id=event.id) }}" class="btn btn-sm btn-secondary">Edit</a>
+        <form action="{{ url_for('event_delete', event_id=event.id) }}" method="POST" style="display:inline;">
+          <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Delete this event?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

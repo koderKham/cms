@@ -1,0 +1,69 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>{% if event %}Edit{% else %}Create{% endif %} Event</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">{{ form.name.label }}{{ form.name(class="form-control") }}</div>
+    <div class="mb-3">{{ form.time_length.label }}{{ form.time_length(class="form-control") }}</div>
+    <div class="mb-3">{{ form.deadline.label }}{{ form.deadline() }}</div>
+   <div>
+  <div class="mb-3">
+  <label for="eventDatetime" class="form-label">Event Date & Time</label>
+  <div class="input-group" id="eventDatetimePicker" data-td-target-input="nearest" data-td-target-toggle="nearest">
+      <input type="text" class="form-control" name="event_datetime" id="eventDatetime" data-td-target="#eventDatetimePicker" value="{{ form.event_datetime.data }}">
+      <span class="input-group-text" data-td-toggle="datetimepicker" data-td-target="#eventDatetimePicker">
+        <i class="bi bi-calendar3"></i>
+      </span>
+  </div>
+</div>
+
+<div class="mb-3">
+  <label for="deadlineDatetime" class="form-label">Deadline Date & Time</label>
+  <div class="input-group" id="deadlineDatetimePicker" data-td-target-input="nearest" data-td-target-toggle="nearest">
+      <input type="text" class="form-control" name="deadline_datetime" id="deadlineDatetime" data-td-target="#deadlineDatetimePicker" value="{{ form.deadline_datetime.data }}">
+      <span class="input-group-text" data-td-toggle="datetimepicker" data-td-target="#deadlineDatetimePicker">
+        <i class="bi bi-calendar3"></i>
+      </span>
+  </div>
+</div>
+
+<script>
+  const eventPicker = new tempusDominus.TempusDominus(document.getElementById('eventDatetimePicker'), {
+    display: {
+      components: { decades: false, year: true, month: true, date: true, hours: true, minutes: true, seconds: false }
+    },
+    useCurrent: false,
+    localization: {
+      format: 'yyyy-MM-dd HH:mm'
+    }
+  });
+  const deadlinePicker = new tempusDominus.TempusDominus(document.getElementById('deadlineDatetimePicker'), {
+    display: {
+      components: { decades: false, year: true, month: true, date: true, hours: true, minutes: true, seconds: false }
+    },
+    useCurrent: false,
+    localization: {
+      format: 'yyyy-MM-dd HH:mm'
+    }
+  });
+</script>
+</div>
+    <div class="mb-3">{{ form.case_id.label }}{{ form.case_id(class="form-select") }}</div>
+    <div class="mb-3">{{ form.client_id.label }}{{ form.client_id(class="form-select") }}</div>
+    <div class="mb-3">{{ form.document_id.label }}{{ form.document_id(class="form-select") }}</div>
+    <div class="mb-3">{{ form.user_id.label }}{{ form.user_id(class="form-select") }}</div>
+    <div class="mb-3">{{ form.completed.label }}{{ form.completed() }}</div>
+    <div>{{ form.submit(class="btn btn-primary") }}</div>
+    {% if form.errors %}
+  <div class="alert alert-danger">
+    <ul>
+      {% for field, errors in form.errors.items() %}
+        {% for error in errors %}
+          <li>{{ field }}: {{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+  </form>
+{% endblock %}

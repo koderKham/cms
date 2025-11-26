@@ -1,0 +1,18 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>{% if template %}Edit{% else %}Create{% endif %} Template</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      {{ form.name.label(class="form-label") }}
+      {{ form.name(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      {{ form.content.label(class="form-label") }}
+      {{ form.content(class="form-control", rows=12) }}
+      <div class="form-text">Use Jinja2 variables: case, client, user, today, now</div>
+    </div>
+    <button class="btn btn-primary">{{ form.submit.label.text }}</button>
+    <a href="{{ url_for('templates_list') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}

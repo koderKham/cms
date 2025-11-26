@@ -1,0 +1,15 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>Preview: {{ doc.filename }}</h2>
+
+  <div class="mb-3">
+    <a href="{{ url_for('document_detail', doc_id=doc.id) }}" class="btn btn-secondary">Back</a>
+    <a href="{{ url_for('document_edit', doc_id=doc.id) }}" class="btn btn-primary ms-2">Edit Metadata</a>
+    <a href="{{ url_for('document_delete', doc_id=doc.id) }}" class="btn btn-danger ms-2" onclick="return confirm('Delete this document?')">Delete</a>
+  </div>
+
+  <div class="document-preview border p-3" style="min-height:300px;">
+    {# content is expected to be HTML; mark safe to render inside the page #}
+    {{ content|safe }}
+  </div>
+{% endblock %}
