@@ -16,183 +16,2993 @@
     {% endif %}
   </div>
 {% endfor %}
-    <div class="mb-3">
+<div class="mb-3">
       {{ form.case_type.label(class="form-label") }}
       {{ form.case_type(class="form-select", id="case_type_select") }}
     </div>
 
-    <div class="mb-3">
-      {{ form.style.label(class="form-label") }}
-      {{ form.style(class="form-control") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.case_number.label(class="form-label") }}
-      {{ form.case_number(class="form-control") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.judge.label(class="form-label") }}
-      {{ form.judge(class="form-control") }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.filed_date.label(class="form-label") }}
-      {{ form.filed_date(class="form-control") }}
-    </div>
-
     <!-- PERSONAL INJURY -->
     <div id="personal_injury_fields" class="case-type-section" style="display:none;">
-      <h5>Personal Injury Details</h5>
-      <div class="mb-3">
-        {{ form.injuries.label(class="form-label") }}
-        {{ form.injuries(class="form-control", rows=4) }}
+    <div class="accordion" id="piCaseAccordion">
+
+      <!-- 1. CORE CASE INFORMATION -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            1. Core Case Information
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#piCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="case_title">Case Title</label>
+                <input type="text" class="form-control" id="case_title" name="case_title">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="case_number_internal">Case Number (Internal)</label>
+                <input type="text" class="form-control" id="case_number_internal" name="case_number_internal">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="case_type">Case Type</label>
+                <select class="form-select" id="case_type" name="case_type">
+                  <option value="">Select...</option>
+                  <option>Auto Accident</option>
+                  <option>Slip &amp; Fall</option>
+                  <option>Premises Liability</option>
+                  <option>Negligent Security</option>
+                  <option>Dog Bite</option>
+                  <option>Commercial Vehicle</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="doi">Date of Incident</label>
+                <input type="date" class="form-control" id="doi" name="doi">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="incident_address">Incident Address</label>
+                <input type="text" class="form-control" id="incident_address" name="incident_address">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="incident_city_county">City / County</label>
+                <input type="text" class="form-control" id="incident_city_county" name="incident_city_county">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="jurisdiction">Jurisdiction (Court/County)</label>
+                <input type="text" class="form-control" id="jurisdiction" name="jurisdiction">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="police_report_number">Police Report #</label>
+                <input type="text" class="form-control" id="police_report_number" name="police_report_number">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="law_enforcement_agency">Law Enforcement Agency</label>
+                <input type="text" class="form-control" id="law_enforcement_agency" name="law_enforcement_agency">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="liability_admitted">Is Liability Admitted?</label>
+              <select class="form-select" id="liability_admitted" name="liability_admitted">
+                <option value="">Select...</option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Unknown</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        {{ form.accident_date.label(class="form-label") }}
-        {{ form.accident_date(class="form-control") }}
+
+      <!-- 2. CLIENT INFORMATION -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            2. Client Information
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#piCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="client_name">Client Name</label>
+                <input type="text" class="form-control" id="client_name" name="client_name">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label" for="client_dob">DOB</label>
+                <input type="date" class="form-control" id="client_dob" name="client_dob">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="client_address">Address</label>
+                <input type="text" class="form-control" id="client_address" name="client_address">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="client_phone">Phone</label>
+                <input type="text" class="form-control" id="client_phone" name="client_phone">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="client_alt_phone">Alt Phone</label>
+                <input type="text" class="form-control" id="client_alt_phone" name="client_alt_phone">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="client_email">Email</label>
+                <input type="email" class="form-control" id="client_email" name="client_email">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="client_dl">Driver License #</label>
+                <input type="text" class="form-control" id="client_dl" name="client_dl">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="client_insurer">Client Insurance Company</label>
+                <input type="text" class="form-control" id="client_insurer" name="client_insurer">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label" for="client_policy">Policy #</label>
+                <input type="text" class="form-control" id="client_policy" name="client_policy">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label" for="client_claim">Claim #</label>
+                <input type="text" class="form-control" id="client_claim" name="client_claim">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="medpay_coverage">Med Pay Coverage?</label>
+                <select class="form-select" id="medpay_coverage" name="medpay_coverage">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="pip_active">PIP Active?</label>
+                <select class="form-select" id="pip_active" name="pip_active">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="pip_limits">PIP Policy Limits</label>
+                <input type="text" class="form-control" id="pip_limits" name="pip_limits" placeholder="$10,000">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        {{ form.accident_location.label(class="form-label") }}
-        {{ form.accident_location(class="form-control") }}
+
+      <!-- 3. DEFENDANT / AT-FAULT PARTY INFORMATION -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            3. Defendant / At-Fault Party Information
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#piCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="defendant_name">Defendant Name</label>
+                <input type="text" class="form-control" id="defendant_name" name="defendant_name">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="defendant_address">Address</label>
+                <input type="text" class="form-control" id="defendant_address" name="defendant_address">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="defendant_contact">Phone / Email</label>
+                <input type="text" class="form-control" id="defendant_contact" name="defendant_contact">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-3">
+                <label class="form-label" for="defendant_dl">Driver License #</label>
+                <input type="text" class="form-control" id="defendant_dl" name="defendant_dl">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="def_vehicle_year">Vehicle Year</label>
+                <input type="text" class="form-control" id="def_vehicle_year" name="def_vehicle_year">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="def_vehicle_make">Vehicle Make</label>
+                <input type="text" class="form-control" id="def_vehicle_make" name="def_vehicle_make">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="def_vehicle_model">Vehicle Model</label>
+                <input type="text" class="form-control" id="def_vehicle_model" name="def_vehicle_model">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="def_insurer">Defendant Insurance Company</label>
+                <input type="text" class="form-control" id="def_insurer" name="def_insurer">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label" for="def_policy">Policy #</label>
+                <input type="text" class="form-control" id="def_policy" name="def_policy">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label" for="def_claim">Claim #</label>
+                <input type="text" class="form-control" id="def_claim" name="def_claim">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="def_bi_limits">Bodily Injury Limits</label>
+                <input type="text" class="form-control" id="def_bi_limits" name="def_bi_limits" placeholder="e.g., 10/20, 25/50">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="adjuster_name">Adjuster Name</label>
+                <input type="text" class="form-control" id="adjuster_name" name="adjuster_name">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="adjuster_phone">Adjuster Phone</label>
+                <input type="text" class="form-control" id="adjuster_phone" name="adjuster_phone">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="adjuster_email">Adjuster Email</label>
+                <input type="email" class="form-control" id="adjuster_email" name="adjuster_email">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="defendant_is_commercial">Is Defendant Commercial / Corporate?</label>
+              <select class="form-select" id="defendant_is_commercial" name="defendant_is_commercial">
+                <option value="">Select...</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="business_name">Business Name</label>
+                <input type="text" class="form-control" id="business_name" name="business_name">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="registered_agent">Registered Agent</label>
+                <input type="text" class="form-control" id="registered_agent" name="registered_agent">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        {{ form.treating_physicians.label(class="form-label") }}
-        {{ form.treating_physicians(class="form-control", rows=3) }}
+
+      <!-- 4. WITNESS INFORMATION -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFour">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            4. Witness Information
+          </button>
+        </h2>
+        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#piCaseAccordion">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label class="form-label" for="witnesses">Witnesses (names, contact info, notes)</label>
+              <textarea class="form-control" id="witnesses" name="witnesses" rows="3"></textarea>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="witness_statement_taken">Statement Taken?</label>
+                <select class="form-select" id="witness_statement_taken" name="witness_statement_taken">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>In Progress</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="witness_liability_support">Liability Support</label>
+                <select class="form-select" id="witness_liability_support" name="witness_liability_support">
+                  <option value="">Select...</option>
+                  <option>Strong</option>
+                  <option>Moderate</option>
+                  <option>Weak</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        {{ form.medical_record_refs.label(class="form-label") }}
-        {{ form.medical_record_refs(class="form-control", rows=2) }}
+
+      <!-- 5. MEDICAL PROVIDERS AND DAMAGES -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFive">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            5. Medical Providers and Damages
+          </button>
+        </h2>
+        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#piCaseAccordion">
+          <div class="accordion-body">
+            <h6>Initial Medical</h6>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="hospital_er">Hospital / ER</label>
+                <input type="text" class="form-control" id="hospital_er" name="hospital_er">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="ems_transport">EMS / Fire Rescue Transport?</label>
+                <select class="form-select" id="ems_transport" name="ems_transport">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="initial_visit_date">Initial Visit Date</label>
+                <input type="date" class="form-control" id="initial_visit_date" name="initial_visit_date">
+              </div>
+            </div>
+
+            <h6>Current &amp; Ongoing Providers</h6>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="chiropractor">Chiropractor</label>
+                <input type="text" class="form-control" id="chiropractor" name="chiropractor">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="orthopedic">Orthopedic</label>
+                <input type="text" class="form-control" id="orthopedic" name="orthopedic">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="neurologist">Neurologist</label>
+                <input type="text" class="form-control" id="neurologist" name="neurologist">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="mri_center">MRI / Imaging Center</label>
+                <input type="text" class="form-control" id="mri_center" name="mri_center">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="pain_management">Pain Management</label>
+                <input type="text" class="form-control" id="pain_management" name="pain_management">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="surgery_center">Surgery Center</label>
+                <input type="text" class="form-control" id="surgery_center" name="surgery_center">
+              </div>
+            </div>
+
+            <h6>Medical Billing</h6>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="total_med_bills">Total Medical Bills to Date</label>
+                <input type="text" class="form-control" id="total_med_bills" name="total_med_bills">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="outstanding_balances">Outstanding Balances</label>
+                <input type="text" class="form-control" id="outstanding_balances" name="outstanding_balances">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="lops">Letters of Protection (LOPs)</label>
+                <textarea class="form-control" id="lops" name="lops" rows="2" placeholder="Provider names, amounts"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        {{ form.lost_wages.label(class="form-label") }}
-        {{ form.lost_wages(class="form-control") }}
+
+      <!-- 6. INJURIES -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSix">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+            6. Injuries
+          </button>
+        </h2>
+        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#piCaseAccordion">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label class="form-label">Injury Areas (check all that apply)</label>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="injury_neck" name="injury_neck">
+                    <label class="form-check-label" for="injury_neck">Neck</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="injury_back" name="injury_back">
+                    <label class="form-check-label" for="injury_back">Back</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="injury_shoulder" name="injury_shoulder">
+                    <label class="form-check-label" for="injury_shoulder">Shoulder</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="injury_knee" name="injury_knee">
+                    <label class="form-check-label" for="injury_knee">Knee</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="injury_concussion" name="injury_concussion">
+                    <label class="form-check-label" for="injury_concussion">Concussion</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="injury_fracture" name="injury_fracture">
+                    <label class="form-check-label" for="injury_fracture">Fractures</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="injury_scars" name="injury_scars">
+                    <label class="form-check-label" for="injury_scars">Scars</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="injury_headaches" name="injury_headaches">
+                    <label class="form-check-label" for="injury_headaches">Headaches</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="injury_radiating" name="injury_radiating">
+                    <label class="form-check-label" for="injury_radiating">Radiating Pain</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="injury_loc" name="injury_loc">
+                    <label class="form-check-label" for="injury_loc">Loss of Consciousness</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="injury_ptd" name="injury_ptd">
+                    <label class="form-check-label" for="injury_ptd">PTD</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="prior_related_injuries">Prior Related Injuries?</label>
+                <select class="form-select" id="prior_related_injuries" name="prior_related_injuries">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="prior_accidents">Prior Accidents?</label>
+                <select class="form-select" id="prior_accidents" name="prior_accidents">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="injury_notes">Injury Details / Notes</label>
+              <textarea class="form-control" id="injury_notes" name="injury_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        {{ form.insurance_info.label(class="form-label") }}
-        {{ form.insurance_info(class="form-control", rows=2) }}
+
+      <!-- 7. PROPERTY DAMAGE -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSeven">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+            7. Property Damage
+          </button>
+        </h2>
+        <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#piCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="total_loss">Total Loss?</label>
+                <select class="form-select" id="total_loss" name="total_loss">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="repair_estimate">Repair Estimate</label>
+                <input type="text" class="form-control" id="repair_estimate" name="repair_estimate">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="photos_uploaded">Photos Uploaded?</label>
+                <select class="form-select" id="photos_uploaded" name="photos_uploaded">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Pending</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="rental_car">Rental Car Provided?</label>
+                <select class="form-select" id="rental_car" name="rental_car">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Requested</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="tow_storage_location">Vehicle Stored/Towed Location</label>
+                <input type="text" class="form-control" id="tow_storage_location" name="tow_storage_location">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="diminished_value_claim">Diminished Value Claim Applicable?</label>
+              <select class="form-select" id="diminished_value_claim" name="diminished_value_claim">
+                <option value="">Select...</option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Unknown</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        {{ form.settlement_amount.label(class="form-label") }}
-        {{ form.settlement_amount(class="form-control") }}
+
+      <!-- 8. INSURANCE COMMUNICATION LOG -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingEight">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+            8. Insurance Communication Log
+          </button>
+        </h2>
+        <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#piCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="demand_sent_date">Demand Sent Date</label>
+                <input type="date" class="form-control" id="demand_sent_date" name="demand_sent_date">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="initial_offer">Initial Offer</label>
+                <input type="text" class="form-control" id="initial_offer" name="initial_offer">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="coverage_disclosure_sent">Coverage Disclosure Request Sent?</label>
+                <select class="form-select" id="coverage_disclosure_sent" name="coverage_disclosure_sent">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="bi_disclosure_received">BI Policy Disclosure Received?</label>
+              <select class="form-select" id="bi_disclosure_received" name="bi_disclosure_received">
+                <option value="">Select...</option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Partial</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="negotiation_notes">Negotiation Notes</label>
+              <textarea class="form-control" id="negotiation_notes" name="negotiation_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. DOCUMENT TRACKING -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingNine">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+            9. Document Tracking
+          </button>
+        </h2>
+        <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#piCaseAccordion">
+          <div class="accordion-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_retainer" name="doc_retainer">
+                  <label class="form-check-label" for="doc_retainer">Retainer Signed</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_hipaa" name="doc_hipaa">
+                  <label class="form-check-label" for="doc_hipaa">HIPAA Authorization</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_lops" name="doc_lops">
+                  <label class="form-check-label" for="doc_lops">LOPs</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_med_records" name="doc_med_records">
+                  <label class="form-check-label" for="doc_med_records">Medical Records Received</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_med_bills" name="doc_med_bills">
+                  <label class="form-check-label" for="doc_med_bills">Medical Bills Received</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_demand_pkg" name="doc_demand_pkg">
+                  <label class="form-check-label" for="doc_demand_pkg">Demand Package</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_ins_correspondence" name="doc_ins_correspondence">
+                  <label class="form-check-label" for="doc_ins_correspondence">Insurance Correspondence</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_lien_letters" name="doc_lien_letters">
+                  <label class="form-check-label" for="doc_lien_letters">Lien Letters (HMO/Medicare/Medicaid)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. LITIGATION FIELDS -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTen">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+            10. Litigation Fields
+          </button>
+        </h2>
+        <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#piCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-3">
+                <label class="form-label" for="court_case_number">Court Case #</label>
+                <input type="text" class="form-control" id="court_case_number" name="court_case_number">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="judge">Judge</label>
+                <input type="text" class="form-control" id="judge" name="judge">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="division">Division</label>
+                <input type="text" class="form-control" id="division" name="division">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="opposing_counsel">Opposing Counsel</label>
+                <input type="text" class="form-control" id="opposing_counsel" name="opposing_counsel">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="opp_counsel_contact">Opposing Counsel Contact (Email/Phone)</label>
+                <input type="text" class="form-control" id="opp_counsel_contact" name="opp_counsel_contact">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="complaint_filed_date">Complaint Filed Date</label>
+                <input type="date" class="form-control" id="complaint_filed_date" name="complaint_filed_date">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="service_status">Service Status</label>
+                <select class="form-select" id="service_status" name="service_status">
+                  <option value="">Select...</option>
+                  <option>Not Served</option>
+                  <option>Served</option>
+                  <option>Substitute Service</option>
+                  <option>Service Waived</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="answer_filed_date">Defendant's Answer Filed Date</label>
+                <input type="date" class="form-control" id="answer_filed_date" name="answer_filed_date">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="mediation_date">Mediation Date</label>
+                <input type="date" class="form-control" id="mediation_date" name="mediation_date">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="trial_date">Trial Date</label>
+                <input type="date" class="form-control" id="trial_date" name="trial_date">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="litigation_notes">Discovery / Depositions / Motions / Experts</label>
+              <textarea class="form-control" id="litigation_notes" name="litigation_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. SETTLEMENT / CLOSING -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingEleven">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+            11. Settlement / Closing
+          </button>
+        </h2>
+        <div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven" data-bs-parent="#piCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-3">
+                <label class="form-label" for="gross_settlement">Gross Settlement Amount</label>
+                <input type="text" class="form-control" id="gross_settlement" name="gross_settlement">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="medical_liens">Medical Liens</label>
+                <input type="text" class="form-control" id="medical_liens" name="medical_liens">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label" for="attorney_fees">Attorney Fees</label>
+                <input type="text" class="form-control" id="attorney_fees" name="attorney_fees">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label" for="costs">Costs</label>
+                <input type="text" class="form-control" id="costs" name="costs">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label" for="net_to_client">Net to Client</label>
+                <input type="text" class="form-control" id="net_to_client" name="net_to_client">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="disbursement_date">Disbursement Date</label>
+                <input type="date" class="form-control" id="disbursement_date" name="disbursement_date">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="release_signed">Release Signed?</label>
+                <select class="form-select" id="release_signed" name="release_signed">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="settlement_check_received">Settlement Check Received?</label>
+                <select class="form-select" id="settlement_check_received" name="settlement_check_received">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Pending</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12. FILE MANAGEMENT -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwelve">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+            12. File Management
+          </button>
+        </h2>
+        <div id="collapseTwelve" class="accordion-collapse collapse" aria-labelledby="headingTwelve" data-bs-parent="#piCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="assigned_attorney">Assigned Attorney</label>
+                <input type="text" class="form-control" id="assigned_attorney" name="assigned_attorney">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="assigned_paralegal">Assigned Paralegal</label>
+                <input type="text" class="form-control" id="assigned_paralegal" name="assigned_paralegal">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="case_status">Status</label>
+                <select class="form-select" id="case_status" name="case_status">
+                  <option value="">Select...</option>
+                  <option>Intake</option>
+                  <option>Pre-suit</option>
+                  <option>Treatment Ongoing</option>
+                  <option>Demand in Progress</option>
+                  <option>Negotiations</option>
+                  <option>Litigation</option>
+                  <option>Settled</option>
+                  <option>Closed</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="important_notes">Important Notes</label>
+              <textarea class="form-control" id="important_notes" name="important_notes" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="followup_reminders">Follow-up Reminders (dates, tasks)</label>
+              <textarea class="form-control" id="followup_reminders" name="followup_reminders" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    </div><!-- /.accordion -->
+
 
     <!-- CRIMINAL -->
     <div id="criminal_fields" class="case-type-section" style="display:none;">
       <h5>Criminal Case Details</h5>
-      <div class="mb-3">
-        {{ form.defendant.label(class="form-label") }}
-        {{ form.defendant(class="form-control") }}
-      </div>
+        <div class="accordion" id="criminalCaseAccordion">
+          <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            1. Core Case Information
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#criminalCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="case_title">Case Title</label>
+                <input type="text" class="form-control" id="case_title" name="case_title" placeholder="State v. John Doe">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="court_case_number">Court Case #</label>
+                <input type="text" class="form-control" id="court_case_number" name="court_case_number">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="internal_case_number">Internal Case #</label>
+                <input type="text" class="form-control" id="internal_case_number" name="internal_case_number">
+              </div>
+            </div>
 
-      <div class="mb-3">
-        {{ form.co_defendants.label(class="form-label") }}
-        <div>
-          {% for val, label in form.co_defendants.choices %}
-            <label class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="{{ form.co_defendants.name }}" value="{{ val }}" {% if form.co_defendants.data == val %}checked{% endif %}>
-              <span class="form-check-label">{{ label }}</span>
-            </label>
-          {% endfor %}
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="jurisdiction">Jurisdiction (County / Court)</label>
+                <input type="text" class="form-control" id="jurisdiction" name="jurisdiction">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="case_level">Case Level</label>
+                <select class="form-select" id="case_level" name="case_level">
+                  <option value="">Select...</option>
+                  <option>Felony</option>
+                  <option>Misdemeanor</option>
+                  <option>Juvenile</option>
+                  <option>Traffic Criminal</option>
+                  <option>Violation of Probation</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="case_type">Case Type</label>
+                <select class="form-select" id="case_type" name="case_type">
+                  <option value="">Select...</option>
+                  <option>Drug Offense</option>
+                  <option>Violent Crime</option>
+                  <option>Theft / Property</option>
+                  <option>DUI</option>
+                  <option>Domestic Violence</option>
+                  <option>Sex Offense</option>
+                  <option>Weapons / Firearm</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="division">Division</label>
+                <input type="text" class="form-control" id="division" name="division">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="judge">Judge</label>
+                <input type="text" class="form-control" id="judge" name="judge">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="prosecutor">Prosecutor / ASA</label>
+                <input type="text" class="form-control" id="prosecutor" name="prosecutor">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="arresting_agency">Arresting Agency</label>
+                <input type="text" class="form-control" id="arresting_agency" name="arresting_agency">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="offense_date">Offense Date</label>
+                <input type="date" class="form-control" id="offense_date" name="offense_date">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="arrest_date">Arrest Date</label>
+                <input type="date" class="form-control" id="arrest_date" name="arrest_date">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="case_status">Current Case Status</label>
+              <select class="form-select" id="case_status" name="case_status">
+                <option value="">Select...</option>
+                <option>Pre-Filing / Investigation</option>
+                <option>Filed - Pretrial</option>
+                <option>Awaiting Plea</option>
+                <option>Set for Trial</option>
+                <option>Post-Conviction / Appeal</option>
+                <option>Closed</option>
+              </select>
+            </div>
+
+          </div>
         </div>
       </div>
 
-      <div class="mb-3">
-        {{ form.jurisdiction.label(class="form-label") }}
-        {{ form.jurisdiction(class="form-select") }}
+      <!-- 2. DEFENDANT INFORMATION -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            2. Defendant Information
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#criminalCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="def_name">Defendant Name</label>
+                <input type="text" class="form-control" id="def_name" name="def_name">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="def_aliases">Aliases / AKA</label>
+                <input type="text" class="form-control" id="def_aliases" name="def_aliases">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="def_dob">DOB</label>
+                <input type="date" class="form-control" id="def_dob" name="def_dob">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="def_address">Address</label>
+                <input type="text" class="form-control" id="def_address" name="def_address">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="def_phone">Phone</label>
+                <input type="text" class="form-control" id="def_phone" name="def_phone">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="def_email">Email</label>
+                <input type="email" class="form-control" id="def_email" name="def_email">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-3">
+                <label class="form-label" for="def_dl">Driver License #</label>
+                <input type="text" class="form-control" id="def_dl" name="def_dl">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="def_ssn_last4">SSN (Last 4)</label>
+                <input type="text" class="form-control" id="def_ssn_last4" name="def_ssn_last4">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="def_employment">Employment</label>
+                <input type="text" class="form-control" id="def_employment" name="def_employment">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="def_education">Education</label>
+                <input type="text" class="form-control" id="def_education" name="def_education">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="immigration_status">Immigration Status</label>
+                <select class="form-select" id="immigration_status" name="immigration_status">
+                  <option value="">Select...</option>
+                  <option>U.S. Citizen</option>
+                  <option>Permanent Resident</option>
+                  <option>Non-Immigrant Visa</option>
+                  <option>Undocumented / Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="primary_language">Primary Language</label>
+                <input type="text" class="form-control" id="primary_language" name="primary_language">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="contact_preference">Contact Preference</label>
+                <select class="form-select" id="contact_preference" name="contact_preference">
+                  <option value="">Select...</option>
+                  <option>Phone</option>
+                  <option>Text</option>
+                  <option>Email</option>
+                  <option>Mail</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
 
-      <div class="mb-3">
-        {{ form.retained_date.label(class="form-label") }}
-        {{ form.retained_date(class="form-control") }}
+      <!-- 3. CHARGES -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            3. Charges
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#criminalCaseAccordion">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label class="form-label" for="primary_charge">Primary Charge</label>
+              <input type="text" class="form-control" id="primary_charge" name="primary_charge" placeholder="e.g., Possession of Cocaine">
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="primary_statute">Statute</label>
+                <input type="text" class="form-control" id="primary_statute" name="primary_statute" placeholder="e.g., 893.13(6)(a)">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="primary_degree">Degree</label>
+                <select class="form-select" id="primary_degree" name="primary_degree">
+                  <option value="">Select...</option>
+                  <option>Capital Felony</option>
+                  <option>Life Felony</option>
+                  <option>1st Degree Felony</option>
+                  <option>2nd Degree Felony</option>
+                  <option>3rd Degree Felony</option>
+                  <option>1st Degree Misdemeanor</option>
+                  <option>2nd Degree Misdemeanor</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="primary_max_penalty">Max Penalty (Guideline / Statutory)</label>
+                <input type="text" class="form-control" id="primary_max_penalty" name="primary_max_penalty" placeholder="e.g., 5 years DOC">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="additional_charges">Additional Charges (counts, statutes, degrees)</label>
+              <textarea class="form-control" id="additional_charges" name="additional_charges" rows="3"></textarea>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="offense_date_range">Offense Date Range (if applicable)</label>
+                <input type="text" class="form-control" id="offense_date_range" name="offense_date_range" placeholder="From/To">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="enhancements">Enhancements</label>
+                <select class="form-select" id="enhancements" name="enhancements">
+                  <option value="">Select...</option>
+                  <option>HFO / PRR / Career Criminal</option>
+                  <option>Drug Trafficking Minimums</option>
+                  <option>DV Enhancement</option>
+                  <option>Firearm Minimums (10-20-Life)</option>
+                  <option>Sexual Offense Registration</option>
+                  <option>None / Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="score_sheet_needed">Score Sheet Needed?</label>
+                <select class="form-select" id="score_sheet_needed" name="score_sheet_needed">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
 
-      <div class="mb-3">
-        {{ form.arresting_agency.label(class="form-label") }}
-        {{ form.arresting_agency(class="form-control") }}
+      <!-- 4. ARREST & PROCEDURAL HISTORY -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFour">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            4. Arrest & Procedural History
+          </button>
+        </h2>
+        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#criminalCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-3">
+                <label class="form-label" for="arrest_type">Arrest Type</label>
+                <select class="form-select" id="arrest_type" name="arrest_type">
+                  <option value="">Select...</option>
+                  <option>On-View Arrest</option>
+                  <option>Warrant</option>
+                  <option>Capias</option>
+                  <option>Notice to Appear</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="booking_number">Booking Number</label>
+                <input type="text" class="form-control" id="booking_number" name="booking_number">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="first_appearance_date">First Appearance Date</label>
+                <input type="date" class="form-control" id="first_appearance_date" name="first_appearance_date">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="arraignment_date">Arraignment Date</label>
+                <input type="date" class="form-control" id="arraignment_date" name="arraignment_date">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="procedural_history">Procedural History (key events)</label>
+              <textarea class="form-control" id="procedural_history" name="procedural_history" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="mb-3">
-        {{ form.case_status.label(class="form-label") }}
-        {{ form.case_status(class="form-select") }}
+      <!-- 5. CUSTODY & BOND -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFive">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            5. Custody & Bond
+          </button>
+        </h2>
+        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#criminalCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="in_custody">In Custody?</label>
+                <select class="form-select" id="in_custody" name="in_custody">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Released</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="custody_location">Custody Location / Jail</label>
+                <input type="text" class="form-control" id="custody_location" name="custody_location">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="inmate_number">Inmate #</label>
+                <input type="text" class="form-control" id="inmate_number" name="inmate_number">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-3">
+                <label class="form-label" for="bond_amount">Bond Amount</label>
+                <input type="text" class="form-control" id="bond_amount" name="bond_amount">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="bond_type">Bond Type</label>
+                <select class="form-select" id="bond_type" name="bond_type">
+                  <option value="">Select...</option>
+                  <option>Monetary</option>
+                  <option>ROR</option>
+                  <option>Pretrial Services</option>
+                  <option>No Bond</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="bond_status">Bond Status</label>
+                <select class="form-select" id="bond_status" name="bond_status">
+                  <option value="">Select...</option>
+                  <option>Not Posted</option>
+                  <option>Posted</option>
+                  <option>Revoked</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="bond_hearing_date">Next Bond Hearing</label>
+                <input type="date" class="form-control" id="bond_hearing_date" name="bond_hearing_date">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="release_conditions">Release Conditions (no contact, GPS, curfew, etc.)</label>
+              <textarea class="form-control" id="release_conditions" name="release_conditions" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="mb-3">
-        {{ form.charges.label(class="form-label") }}
-        {{ form.charges(class="form-control", rows=5) }}
+      <!-- 6. VICTIM & CO-DEFENDANTS -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSix">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+            6. Victim & Co-Defendants
+          </button>
+        </h2>
+        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#criminalCaseAccordion">
+          <div class="accordion-body">
+            <h6>Victim(s)</h6>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="victim_info">Victim Name(s) & Contact</label>
+                <textarea class="form-control" id="victim_info" name="victim_info" rows="2"></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="victim_position">Victim Position (wants prosecution, neutral, recanting)</label>
+                <textarea class="form-control" id="victim_position" name="victim_position" rows="2"></textarea>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="no_contact_order">No Contact Order?</label>
+                <select class="form-select" id="no_contact_order" name="no_contact_order">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Modified</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="dv_injunction">DV Injunction / Other Injunction?</label>
+                <select class="form-select" id="dv_injunction" name="dv_injunction">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Pending</option>
+                </select>
+              </div>
+            </div>
+
+            <h6>Co-Defendant(s)</h6>
+            <div class="mb-3">
+              <label class="form-label" for="codef_info">Co-Defendants (names, case #s, attorneys)</label>
+              <textarea class="form-control" id="codef_info" name="codef_info" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <!-- 7. EVIDENCE SUMMARY -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSeven">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+            7. Evidence Summary
+          </button>
+        </h2>
+        <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#criminalCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_police_reports" name="evidence_police_reports">
+                  <label class="form-check-label" for="evidence_police_reports">Police Reports</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_bodycam" name="evidence_bodycam">
+                  <label class="form-check-label" for="evidence_bodycam">Bodycam / Dashcam</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_911" name="evidence_911">
+                  <label class="form-check-label" for="evidence_911">911 Calls</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_witness_statements" name="evidence_witness_statements">
+                  <label class="form-check-label" for="evidence_witness_statements">Witness Statements</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_lab_reports" name="evidence_lab_reports">
+                  <label class="form-check-label" for="evidence_lab_reports">Lab / Forensic Reports</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_photos" name="evidence_photos">
+                  <label class="form-check-label" for="evidence_photos">Photos / Video</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_search_warrants" name="evidence_search_warrants">
+                  <label class="form-check-label" for="evidence_search_warrants">Search Warrants / Affidavits</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_phone_records" name="evidence_phone_records">
+                  <label class="form-check-label" for="evidence_phone_records">Phone / Cell Site Records</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_other" name="evidence_other">
+                  <label class="form-check-label" for="evidence_other">Other Significant Evidence</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="evidence_summary">Evidence Summary / Issues</label>
+              <textarea class="form-control" id="evidence_summary" name="evidence_summary" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. PRIOR CRIMINAL HISTORY -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingEight">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+            8. Prior Criminal History
+          </button>
+        </h2>
+        <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#criminalCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="prior_felonies">Prior Felonies?</label>
+                <select class="form-select" id="prior_felonies" name="prior_felonies">
+                  <option value="">Select...</option>
+                  <option>None</option>
+                  <option>1–2</option>
+                  <option>3 or more</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="prior_misdemeanors">Prior Misdemeanors?</label>
+                <select class="form-select" id="prior_misdemeanors" name="prior_misdemeanors">
+                  <option value="">Select...</option>
+                  <option>None</option>
+                  <option>1–2</option>
+                  <option>3 or more</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="prior_juvenile">Juvenile History?</label>
+                <select class="form-select" id="prior_juvenile" name="prior_juvenile">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="on_probation">On Probation / Community Control at Arrest?</label>
+                <select class="form-select" id="on_probation" name="on_probation">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="pending_cases">Other Pending Cases?</label>
+                <select class="form-select" id="pending_cases" name="pending_cases">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="priors_affecting_sentence">Priors Affecting Minimum/Score?</label>
+                <select class="form-select" id="priors_affecting_sentence" name="priors_affecting_sentence">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="prior_history_notes">Criminal History Details</label>
+              <textarea class="form-control" id="prior_history_notes" name="prior_history_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. MOTIONS & DEFENSE STRATEGY -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingNine">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+            9. Motions & Defense Strategy
+          </button>
+        </h2>
+        <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#criminalCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="motion_suppress" name="motion_suppress">
+                  <label class="form-check-label" for="motion_suppress">Motion to Suppress</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="motion_dismiss" name="motion_dismiss">
+                  <label class="form-check-label" for="motion_dismiss">Motion to Dismiss</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="motion_compel" name="motion_compel">
+                  <label class="form-check-label" for="motion_compel">Motion to Compel Discovery</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="motion_bond" name="motion_bond">
+                  <label class="form-check-label" for="motion_bond">Motion to Set/Modify Bond</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="motion_other" name="motion_other">
+                  <label class="form-check-label" for="motion_other">Other Critical Motions</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="defense_theory">Defense Theory / Strategy Notes</label>
+              <textarea class="form-control" id="defense_theory" name="defense_theory" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. PLEA NEGOTIATIONS & TRIAL -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTen">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+            10. Plea Negotiations & Trial
+          </button>
+        </h2>
+        <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#criminalCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="plea_offer">Current Plea Offer</label>
+                <input type="text" class="form-control" id="plea_offer" name="plea_offer">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="offer_date">Offer Date</label>
+                <input type="date" class="form-control" id="offer_date" name="offer_date">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="offer_expiration">Offer Expiration</label>
+                <input type="date" class="form-control" id="offer_expiration" name="offer_expiration">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="plea_discussion_notes">Plea Discussion Notes</label>
+              <textarea class="form-control" id="plea_discussion_notes" name="plea_discussion_notes" rows="3"></textarea>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="trial_setting">Trial Setting</label>
+                <select class="form-select" id="trial_setting" name="trial_setting">
+                  <option value="">Select...</option>
+                  <option>Not Set</option>
+                  <option>Trial Date Set</option>
+                  <option>On Trial Docket</option>
+                  <option>Waived</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="trial_date">Trial Date</label>
+                <input type="date" class="form-control" id="trial_date" name="trial_date">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="jury_or_bench">Jury or Bench Trial</label>
+                <select class="form-select" id="jury_or_bench" name="jury_or_bench">
+                  <option value="">Select...</option>
+                  <option>Jury</option>
+                  <option>Bench</option>
+                  <option>Not Determined</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. SENTENCING / POST-JUDGMENT -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingEleven">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+            11. Sentencing / Post-Judgment
+          </button>
+        </h2>
+        <div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven" data-bs-parent="#criminalCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-3">
+                <label class="form-label" for="disposition">Disposition</label>
+                <select class="form-select" id="disposition" name="disposition">
+                  <option value="">Select...</option>
+                  <option>Pending</option>
+                  <option>Plea</option>
+                  <option>Trial - Guilty</option>
+                  <option>Trial - Not Guilty</option>
+                  <option>Dismissed / Nolle Pros</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="sentencing_date">Sentencing Date</label>
+                <input type="date" class="form-control" id="sentencing_date" name="sentencing_date">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="incarceration_term">Incarceration Term</label>
+                <input type="text" class="form-control" id="incarceration_term" name="incarceration_term" placeholder="e.g., 364 days BCJ">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="probation_term">Probation / Community Control</label>
+                <input type="text" class="form-control" id="probation_term" name="probation_term">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-3">
+                <label class="form-label" for="fines">Fines</label>
+                <input type="text" class="form-control" id="fines" name="fines">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="court_costs">Court Costs / Fees</label>
+                <input type="text" class="form-control" id="court_costs" name="court_costs">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="restitution">Restitution</label>
+                <input type="text" class="form-control" id="restitution" name="restitution">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="special_conditions">Special Conditions</label>
+                <input type="text" class="form-control" id="special_conditions" name="special_conditions" placeholder="e.g., DV class, drug eval">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="postconviction_issues">Post-Conviction / Appeal Issues</label>
+              <textarea class="form-control" id="postconviction_issues" name="postconviction_issues" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12. FILE MANAGEMENT -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwelve">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+            12. File Management
+          </button>
+        </h2>
+        <div id="collapseTwelve" class="accordion-collapse collapse" aria-labelledby="headingTwelve" data-bs-parent="#criminalCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="assigned_attorney">Assigned Attorney</label>
+                <input type="text" class="form-control" id="assigned_attorney" name="assigned_attorney">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="assigned_paralegal">Assigned Paralegal / Assistant</label>
+                <input type="text" class="form-control" id="assigned_paralegal" name="assigned_paralegal">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="file_status">File Status</label>
+                <select class="form-select" id="file_status" name="file_status">
+                  <option value="">Select...</option>
+                  <option>Intake</option>
+                  <option>Active - Pretrial</option>
+                  <option>Active - Trial</option>
+                  <option>Active - Post-Conviction</option>
+                  <option>Closed</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="file_notes">Important Notes</label>
+              <textarea class="form-control" id="file_notes" name="file_notes" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="followup_tasks">Follow-Up Tasks / Reminders</label>
+              <textarea class="form-control" id="followup_tasks" name="followup_tasks" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.accordion -->
+        </div>
+      </div>
+
 
     <!-- ESTATE / PROBATE -->
     <div id="estate_fields" class="case-type-section" style="display:none;">
       <h5>Estate / Probate Details</h5>
-      <div class="mb-3">
-        {{ form.decedent_name.label(class="form-label") }}
-        {{ form.decedent_name(class="form-control") }}
-      </div>
-      <div class="mb-3">
-        {{ form.date_of_death.label(class="form-label") }}
-        {{ form.date_of_death(class="form-control") }}
-      </div>
-      <div class="mb-3">
-        {{ form.will_present.label(class="form-label") }}
-        <div>
-          {% for val, label in form.will_present.choices %}
-            <label class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="{{ form.will_present.name }}" value="{{ val }}" {% if form.will_present.data == val %}checked{% endif %}>
-              <span class="form-check-label">{{ label }}</span>
-            </label>
-          {% endfor %}
+       <div class="accordion" id="probateCaseAccordion">
+
+      <!-- 1. CORE CASE INFORMATION -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            1. Core Case Information
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#probateCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="case_title">Case Title</label>
+                <input type="text" class="form-control" id="case_title" name="case_title" placeholder="In re: Estate of John Doe">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="court_case_number">Court Case #</label>
+                <input type="text" class="form-control" id="court_case_number" name="court_case_number">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="internal_case_number">Internal Case #</label>
+                <input type="text" class="form-control" id="internal_case_number" name="internal_case_number">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="jurisdiction">Jurisdiction (County / Division)</label>
+                <input type="text" class="form-control" id="jurisdiction" name="jurisdiction">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="case_type">Case Type</label>
+                <select class="form-select" id="case_type" name="case_type">
+                  <option value="">Select...</option>
+                  <option>Formal Administration</option>
+                  <option>Summary Administration</option>
+                  <option>Ancillary Administration</option>
+                  <option>Trust Administration</option>
+                  <option>Guardianship</option>
+                  <option>Estate Planning Only</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="referral_source">Referral Source</label>
+                <input type="text" class="form-control" id="referral_source" name="referral_source">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="primary_contact">Primary Client Contact Name</label>
+                <input type="text" class="form-control" id="primary_contact" name="primary_contact">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="primary_contact_phone">Phone</label>
+                <input type="text" class="form-control" id="primary_contact_phone" name="primary_contact_phone">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="primary_contact_email">Email</label>
+                <input type="email" class="form-control" id="primary_contact_email" name="primary_contact_email">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="matter_notes">Brief Description of Matter</label>
+              <textarea class="form-control" id="matter_notes" name="matter_notes" rows="2"></textarea>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="mb-3">
-        {{ form.executor_name.label(class="form-label") }}
-        {{ form.executor_name(class="form-control") }}
+
+      <!-- 2. DECEDENT INFORMATION -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            2. Decedent Information
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#probateCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="decedent_name">Decedent Name</label>
+                <input type="text" class="form-control" id="decedent_name" name="decedent_name">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="decedent_dob">Date of Birth</label>
+                <input type="date" class="form-control" id="decedent_dob" name="decedent_dob">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="decedent_dod">Date of Death</label>
+                <input type="date" class="form-control" id="decedent_dod" name="decedent_dod">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="decedent_last_address">Last Residence Address</label>
+                <input type="text" class="form-control" id="decedent_last_address" name="decedent_last_address">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="decedent_county">County of Domicile</label>
+                <input type="text" class="form-control" id="decedent_county" name="decedent_county">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="decedent_ssn_last4">SSN (Last 4)</label>
+                <input type="text" class="form-control" id="decedent_ssn_last4" name="decedent_ssn_last4">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="marital_status_at_death">Marital Status at Death</label>
+                <select class="form-select" id="marital_status_at_death" name="marital_status_at_death">
+                  <option value="">Select...</option>
+                  <option>Married</option>
+                  <option>Single</option>
+                  <option>Divorced</option>
+                  <option>Widowed</option>
+                  <option>Separated</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="date_of_marriage">Date of Marriage (if married)</label>
+                <input type="date" class="form-control" id="date_of_marriage" name="date_of_marriage">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="spouse_name">Surviving Spouse Name (if any)</label>
+                <input type="text" class="form-control" id="spouse_name" name="spouse_name">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="decedent_notes">Additional Decedent Notes</label>
+              <textarea class="form-control" id="decedent_notes" name="decedent_notes" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        {{ form.beneficiaries.label(class="form-label") }}
-        {{ form.beneficiaries(class="form-control", rows=3) }}
+
+      <!-- 3. ESTATE TYPE & PROCEEDINGS -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            3. Estate Type & Proceedings
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#probateCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="testate_intestate">Testate or Intestate</label>
+                <select class="form-select" id="testate_intestate" name="testate_intestate">
+                  <option value="">Select...</option>
+                  <option>Testate (Will)</option>
+                  <option>Intestate (No Will)</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="original_will_location">Original Will Location</label>
+                <input type="text" class="form-control" id="original_will_location" name="original_will_location">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="will_date">Will / Last Codicil Date</label>
+                <input type="date" class="form-control" id="will_date" name="will_date">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="prior_probate">Any Prior Probate Filed?</label>
+                <select class="form-select" id="prior_probate" name="prior_probate">
+                  <option value="">Select...</option>
+                  <option>Yes - In Florida</option>
+                  <option>Yes - Other State</option>
+                  <option>No</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="nonprobate_assets">Significant Non-Probate Assets?</label>
+                <select class="form-select" id="nonprobate_assets" name="nonprobate_assets">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="estimated_estate_value">Estimated Probate Estate Value</label>
+                <input type="text" class="form-control" id="estimated_estate_value" name="estimated_estate_value" placeholder="$">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="proceeding_notes">Proceeding / Strategy Notes</label>
+              <textarea class="form-control" id="proceeding_notes" name="proceeding_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        {{ form.estate_value.label(class="form-label") }}
-        {{ form.estate_value(class="form-control") }}
+
+      <!-- 4. HEIRS / BENEFICIARIES -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFour">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            4. Heirs / Beneficiaries
+          </button>
+        </h2>
+        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#probateCaseAccordion">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label class="form-label" for="heirs_beneficiaries_list">Heirs / Beneficiaries (names, relationships, addresses, DOB)</label>
+              <textarea class="form-control" id="heirs_beneficiaries_list" name="heirs_beneficiaries_list" rows="4"></textarea>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="minor_beneficiaries">Minor Beneficiaries?</label>
+                <select class="form-select" id="minor_beneficiaries" name="minor_beneficiaries">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="disabled_beneficiaries">Disabled / Special Needs Beneficiaries?</label>
+                <select class="form-select" id="disabled_beneficiaries" name="disabled_beneficiaries">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="disputed_heirs">Any Disputed Heirs or Contested Beneficiary Issues?</label>
+                <select class="form-select" id="disputed_heirs" name="disputed_heirs">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Possible</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="heir_notes">Heir / Beneficiary Notes</label>
+              <textarea class="form-control" id="heir_notes" name="heir_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-3">
-        {{ form.probate_case_number.label(class="form-label") }}
-        {{ form.probate_case_number(class="form-control") }}
+
+      <!-- 5. PERSONAL REPRESENTATIVE / FIDUCIARY -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFive">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            5. Personal Representative / Fiduciary
+          </button>
+        </h2>
+        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#probateCaseAccordion">
+          <div class="accordion-body">
+            <h6>Proposed Personal Representative / Executor</h6>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="pr_name">Name</label>
+                <input type="text" class="form-control" id="pr_name" name="pr_name">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="pr_relationship">Relationship to Decedent</label>
+                <input type="text" class="form-control" id="pr_relationship" name="pr_relationship">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="pr_residency">Residency (State)</label>
+                <input type="text" class="form-control" id="pr_residency" name="pr_residency">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="pr_address">Address</label>
+                <input type="text" class="form-control" id="pr_address" name="pr_address">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="pr_phone">Phone</label>
+                <input type="text" class="form-control" id="pr_phone" name="pr_phone">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="pr_email">Email</label>
+                <input type="email" class="form-control" id="pr_email" name="pr_email">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="alt_pr_named">Alternate PR Named in Will?</label>
+                <select class="form-select" id="alt_pr_named" name="alt_pr_named">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Not Applicable</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="bond_required">Bond Required?</label>
+                <select class="form-select" id="bond_required" name="bond_required">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="pr_issues">Any Conflicts or Eligibility Issues?</label>
+                <select class="form-select" id="pr_issues" name="pr_issues">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Possible</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="fiduciary_notes">Fiduciary Notes</label>
+              <textarea class="form-control" id="fiduciary_notes" name="fiduciary_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- 6. ASSETS – REAL PROPERTY -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSix">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+            6. Assets – Real Property
+          </button>
+        </h2>
+        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#probateCaseAccordion">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label class="form-label" for="real_property_list">Real Property (addresses, legal descriptions, ownership, estimated values)</label>
+              <textarea class="form-control" id="real_property_list" name="real_property_list" rows="4"></textarea>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="primary_residence_homestead">Primary Residence Homestead?</label>
+                <select class="form-select" id="primary_residence_homestead" name="primary_residence_homestead">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="mortgage_balance">Approx. Mortgage Balances</label>
+                <input type="text" class="form-control" id="mortgage_balance" name="mortgage_balance">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="rental_or_investment">Any Rental / Investment Properties?</label>
+                <select class="form-select" id="rental_or_investment" name="rental_or_investment">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="real_property_notes">Real Property Notes (title issues, co-owners, etc.)</label>
+              <textarea class="form-control" id="real_property_notes" name="real_property_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. ASSETS – PERSONAL PROPERTY & FINANCIAL -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSeven">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+            7. Assets – Personal Property & Financial
+          </button>
+        </h2>
+        <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#probateCaseAccordion">
+          <div class="accordion-body">
+            <h6>Bank / Investment Accounts</h6>
+            <div class="mb-3">
+              <label class="form-label" for="financial_accounts">Accounts (bank, brokerage, etc. – institution, ownership, approx. balances, POD/TOD)</label>
+              <textarea class="form-control" id="financial_accounts" name="financial_accounts" rows="3"></textarea>
+            </div>
+
+            <h6>Retirement / Life Insurance</h6>
+            <div class="mb-3">
+              <label class="form-label" for="retirement_accounts">Retirement (401k, IRA, pensions – beneficiary designations, balances)</label>
+              <textarea class="form-control" id="retirement_accounts" name="retirement_accounts" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="life_insurance">Life Insurance Policies (carrier, face amount, named beneficiaries)</label>
+              <textarea class="form-control" id="life_insurance" name="life_insurance" rows="3"></textarea>
+            </div>
+
+            <h6>Personal Property</h6>
+            <div class="mb-3">
+              <label class="form-label" for="personal_property">Significant Personal Property (vehicles, jewelry, collections, business interests, etc.)</label>
+              <textarea class="form-control" id="personal_property" name="personal_property" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. DEBTS / CREDITORS -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingEight">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+            8. Debts / Creditors
+          </button>
+        </h2>
+        <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#probateCaseAccordion">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label class="form-label" for="creditors_list">Known Creditors (names, addresses, amounts, secured/unsecured)</label>
+              <textarea class="form-control" id="creditors_list" name="creditors_list" rows="4"></textarea>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="funeral_expenses_paid">Funeral / Burial Expenses Paid?</label>
+                <select class="form-select" id="funeral_expenses_paid" name="funeral_expenses_paid">
+                  <option value="">Select...</option>
+                  <option>Yes - Paid</option>
+                  <option>Outstanding</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="medical_bills_final_illness">Medical Bills – Final Illness?</label>
+                <select class="form-select" id="medical_bills_final_illness" name="medical_bills_final_illness">
+                  <option value="">Select...</option>
+                  <option>Yes - Significant</option>
+                  <option>Yes - Minimal</option>
+                  <option>None</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="irs_or_tax_debts">IRS / Tax Debts?</label>
+                <select class="form-select" id="irs_or_tax_debts" name="irs_or_tax_debts">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="creditor_notes">Creditor / Debt Notes</label>
+              <textarea class="form-control" id="creditor_notes" name="creditor_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. HOMESTEAD & EXEMPT PROPERTY -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingNine">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+            9. Homestead & Exempt Property
+          </button>
+        </h2>
+        <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#probateCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="homestead_determination_needed">Petition to Determine Homestead Needed?</label>
+                <select class="form-select" id="homestead_determination_needed" name="homestead_determination_needed">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="exempt_property_items">Exempt Property (household furnishings, vehicles, etc.)</label>
+                <input type="text" class="form-control" id="exempt_property_items" name="exempt_property_items">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="family_allowance">Family Allowance Requested?</label>
+                <select class="form-select" id="family_allowance" name="family_allowance">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Maybe / Discuss</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="homestead_notes">Homestead / Exempt Property Notes</label>
+              <textarea class="form-control" id="homestead_notes" name="homestead_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. TAX & REPORTING -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTen">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+            10. Tax & Reporting
+          </button>
+        </h2>
+        <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#probateCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="estate_tax_filing_needed">Federal Estate Tax Filing Needed?</label>
+                <select class="form-select" id="estate_tax_filing_needed" name="estate_tax_filing_needed">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="final_1040_needed">Final 1040 (Income Tax) Needed?</label>
+                <select class="form-select" id="final_1040_needed" name="final_1040_needed">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="fiduciary_1041_needed">Fiduciary Return 1041 Needed?</label>
+                <select class="form-select" id="fiduciary_1041_needed" name="fiduciary_1041_needed">
+                  <option value="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="tax_preparer">CPA / Tax Preparer Involved?</label>
+              <input type="text" class="form-control" id="tax_preparer" name="tax_preparer" placeholder="Name / Contact">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="tax_notes">Tax / Reporting Notes</label>
+              <textarea class="form-control" id="tax_notes" name="tax_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. DOCUMENTS & DEADLINES -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingEleven">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+            11. Documents & Deadlines
+          </button>
+        </h2>
+        <div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven" data-bs-parent="#probateCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_retainer" name="doc_retainer">
+                  <label class="form-check-label" for="doc_retainer">Retainer / Fee Agreement Signed</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_original_will" name="doc_original_will">
+                  <label class="form-check-label" for="doc_original_will">Original Will Obtained</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_death_certificate" name="doc_death_certificate">
+                  <label class="form-check-label" for="doc_death_certificate">Death Certificate(s)</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_petition_admin" name="doc_petition_admin">
+                  <label class="form-check-label" for="doc_petition_admin">Petition for Administration</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_oath_pr" name="doc_oath_pr">
+                  <label class="form-check-label" for="doc_oath_pr">Oath of PR / Designation of Resident Agent</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_notice_admin" name="doc_notice_admin">
+                  <label class="form-check-label" for="doc_notice_admin">Notice of Administration</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_notice_creditors" name="doc_notice_creditors">
+                  <label class="form-check-label" for="doc_notice_creditors">Notice to Creditors</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_inventory" name="doc_inventory">
+                  <label class="form-check-label" for="doc_inventory">Inventory Filed</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_final_accounting" name="doc_final_accounting">
+                  <label class="form-check-label" for="doc_final_accounting">Final Accounting / Petition for Discharge</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="date_letters_issued">Date Letters of Administration Issued</label>
+                <input type="date" class="form-control" id="date_letters_issued" name="date_letters_issued">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="notice_creditors_pub_date">Notice to Creditors Publication Date</label>
+                <input type="date" class="form-control" id="notice_creditors_pub_date" name="notice_creditors_pub_date">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="claims_deadline">Creditor Claims Deadline</label>
+                <input type="date" class="form-control" id="claims_deadline" name="claims_deadline">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="doc_deadline_notes">Document / Deadline Notes</label>
+              <textarea class="form-control" id="doc_deadline_notes" name="doc_deadline_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12. FILE MANAGEMENT -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwelve">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+            12. File Management
+          </button>
+        </h2>
+        <div id="collapseTwelve" class="accordion-collapse collapse" aria-labelledby="headingTwelve" data-bs-parent="#probateCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="assigned_attorney">Assigned Attorney</label>
+                <input type="text" class="form-control" id="assigned_attorney" name="assigned_attorney">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="assigned_paralegal">Assigned Paralegal / Staff</label>
+                <input type="text" class="form-control" id="assigned_paralegal" name="assigned_paralegal">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="file_status">File Status</label>
+                <select class="form-select" id="file_status" name="file_status">
+                  <option value="">Select...</option>
+                  <option>Intake</option>
+                  <option>Active - Opening Probate</option>
+                  <option>Active - Administration</option>
+                  <option>Active - Closing</option>
+                  <option>Closed</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="file_notes">Important Notes</label>
+              <textarea class="form-control" id="file_notes" name="file_notes" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="followup_tasks">Follow-Up Tasks / Reminders (calendar items, calls, filings)</label>
+              <textarea class="form-control" id="followup_tasks" name="followup_tasks" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.accordion -->
+
+
     </div>
 
     <!-- OTHER / GENERAL -->
     <div id="other_fields" class="case-type-section" style="display:none;">
       <h5>Other Matter Details</h5>
-      <div class="mb-3">
-        {{ form.matter_description.label(class="form-label") }}
-        {{ form.matter_description(class="form-control", rows=4) }}
-      </div>
-      <div class="mb-3">
-        {{ form.opposing_party.label(class="form-label") }}
-        {{ form.opposing_party(class="form-control") }}
-      </div>
-      <div class="mb-3">
-        {{ form.priority.label(class="form-label") }}
-        {{ form.priority(class="form-select") }}
-      </div>
-      <div class="mb-3">
-        {{ form.court.label(class="form-label") }}
-        {{ form.court(class="form-control") }}
-      </div>
-    </div>
+      <div class="accordion" id="miscCaseAccordion">
 
-    <div class="mb-3">
-      {{ form.client_id.label(class="form-label") }}
-      {{ form.client_id(class="form-select") }}
-    </div>
-    <div class="mb-3">
-      {{ form.user_id.label(class="form-label") }}
-      {{ form.user_id(class="form-select") }}
-    </div>
+      <!-- 1. CORE CASE INFORMATION -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            1. Core Case Information
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#miscCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-5">
+                <label class="form-label" for="case_title">Case Title</label>
+                <input type="text" class="form-control" id="case_title" name="case_title" placeholder="e.g., Smith v. Jones">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="court_case_number">Court Case #</label>
+                <input type="text" class="form-control" id="court_case_number" name="court_case_number">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="internal_case_number">Internal Case #</label>
+                <input type="text" class="form-control" id="internal_case_number" name="internal_case_number">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="case_category">Case Category</label>
+                <select class="form-select" id="case_category" name="case_category">
+                  <option value="">Select...</option>
+                  <option>Civil (General)</option>
+                  <option>Family Law</option>
+                  <option>Landlord / Tenant</option>
+                  <option>Real Estate</option>
+                  <option>Contract / Business</option>
+                  <option>Administrative</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="jurisdiction">Jurisdiction / Court</label>
+                <input type="text" class="form-control" id="jurisdiction" name="jurisdiction" placeholder="e.g., Broward Circuit Civil">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="division">Division / Section</label>
+                <input type="text" class="form-control" id="division" name="division">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="judge">Judge</label>
+                <input type="text" class="form-control" id="judge" name="judge">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="referral_source">Referral Source</label>
+                <input type="text" class="form-control" id="referral_source" name="referral_source">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="case_description">Brief Description of Case</label>
+              <textarea class="form-control" id="case_description" name="case_description" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="case_status">Current Case Status</label>
+              <select class="form-select" id="case_status" name="case_status">
+                <option value="">Select...</option>
+                <option>Intake / Consultation</option>
+                <option>Pre-Suit</option>
+                <option>Active Litigation</option>
+                <option>Post-Judgment</option>
+                <option>Closed</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. CLIENT INFORMATION -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            2. Client Information
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#miscCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="client_name">Client Name</label>
+                <input type="text" class="form-control" id="client_name" name="client_name">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="client_type">Client Type</label>
+                <select class="form-select" id="client_type" name="client_type">
+                  <option value="">Select...</option>
+                  <option>Individual</option>
+                  <option>Married Couple</option>
+                  <option>Business / Entity</option>
+                  <option>Trust / Estate</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="client_role">Client Role</label>
+                <select class="form-select" id="client_role" name="client_role">
+                  <option value="">Select...</option>
+                  <option>Plaintiff / Petitioner</option>
+                  <option>Defendant / Respondent</option>
+                  <option>Applicant</option>
+                  <option>Appellant</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="client_address">Address</label>
+                <input type="text" class="form-control" id="client_address" name="client_address">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="client_phone">Phone</label>
+                <input type="text" class="form-control" id="client_phone" name="client_phone">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="client_email">Email</label>
+                <input type="email" class="form-control" id="client_email" name="client_email">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="primary_contact_person">Primary Contact Person (if entity)</label>
+                <input type="text" class="form-control" id="primary_contact_person" name="primary_contact_person">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="primary_contact_phone">Primary Contact Phone</label>
+                <input type="text" class="form-control" id="primary_contact_phone" name="primary_contact_phone">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="primary_contact_email">Primary Contact Email</label>
+                <input type="email" class="form-control" id="primary_contact_email" name="primary_contact_email">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="client_notes">Client Notes (background, goals, sensitivities)</label>
+              <textarea class="form-control" id="client_notes" name="client_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. OPPOSING PARTY / ADVERSE PARTY -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            3. Opposing / Adverse Party Information
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#miscCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="opposing_name">Opposing / Adverse Party Name</label>
+                <input type="text" class="form-control" id="opposing_name" name="opposing_name">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="opposing_type">Party Type</label>
+                <select class="form-select" id="opposing_type" name="opposing_type">
+                  <option value="">Select...</option>
+                  <option>Individual</option>
+                  <option>Business / Entity</option>
+                  <option>Government Agency</option>
+                  <option>Association</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="opposing_role">Role</label>
+                <select class="form-select" id="opposing_role" name="opposing_role">
+                  <option value="">Select...</option>
+                  <option>Plaintiff / Petitioner</option>
+                  <option>Defendant / Respondent</option>
+                  <option>Agency / Board</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="opposing_address">Address</label>
+                <input type="text" class="form-control" id="opposing_address" name="opposing_address">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="opposing_phone">Phone</label>
+                <input type="text" class="form-control" id="opposing_phone" name="opposing_phone">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="opposing_email">Email</label>
+                <input type="email" class="form-control" id="opposing_email" name="opposing_email">
+              </div>
+            </div>
+
+            <h6>Opposing Counsel</h6>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="opposing_counsel">Opposing Counsel Name</label>
+                <input type="text" class="form-control" id="opposing_counsel" name="opposing_counsel">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="opposing_counsel_firm">Firm</label>
+                <input type="text" class="form-control" id="opposing_counsel_firm" name="opposing_counsel_firm">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="opposing_counsel_contact">Opposing Counsel Contact (Email/Phone)</label>
+                <input type="text" class="form-control" id="opposing_counsel_contact" name="opposing_counsel_contact">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="opposing_notes">Opposing Party Notes</label>
+              <textarea class="form-control" id="opposing_notes" name="opposing_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. COURT & PROCEDURAL POSTURE -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFour">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            4. Court & Procedural Posture
+          </button>
+        </h2>
+        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#miscCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="case_stage">Case Stage</label>
+                <select class="form-select" id="case_stage" name="case_stage">
+                  <option value="">Select...</option>
+                  <option>Pre-Suit / Demand</option>
+                  <option>Pleading Stage</option>
+                  <option>Discovery</option>
+                  <option>Pretrial / Mediation</option>
+                  <option>Trial</option>
+                  <option>Post-Judgment</option>
+                  <option>Appeal</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="filing_date">Filing Date</label>
+                <input type="date" class="form-control" id="filing_date" name="filing_date">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="service_status">Service Status</label>
+                <select class="form-select" id="service_status" name="service_status">
+                  <option value="">Select...</option>
+                  <option>Not Served</option>
+                  <option>Served</option>
+                  <option>Substitute Service</option>
+                  <option>Service Waived</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-3">
+                <label class="form-label" for="answer_due_date">Answer / Response Due Date</label>
+                <input type="date" class="form-control" id="answer_due_date" name="answer_due_date">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="discovery_cutoff">Discovery Cutoff</label>
+                <input type="date" class="form-control" id="discovery_cutoff" name="discovery_cutoff">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="pretrial_date">Pretrial / Case Management Date</label>
+                <input type="date" class="form-control" id="pretrial_date" name="pretrial_date">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="trial_date">Trial / Final Hearing Date</label>
+                <input type="date" class="form-control" id="trial_date" name="trial_date">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="procedural_notes">Procedural History / Notes</label>
+              <textarea class="form-control" id="procedural_notes" name="procedural_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. KEY FACTS & ISSUES -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFive">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            5. Key Facts & Issues
+          </button>
+        </h2>
+        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#miscCaseAccordion">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label class="form-label" for="fact_summary">Fact Summary</label>
+              <textarea class="form-control" id="fact_summary" name="fact_summary" rows="4"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="key_issues">Key Legal / Factual Issues</label>
+              <textarea class="form-control" id="key_issues" name="key_issues" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="client_objectives">Client Objectives</label>
+              <textarea class="form-control" id="client_objectives" name="client_objectives" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. CLAIMS / DEFENSES -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSix">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+            6. Claims / Causes of Action / Defenses
+          </button>
+        </h2>
+        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#miscCaseAccordion">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label class="form-label" for="claims_list">Claims / Causes of Action (with statutes, if applicable)</label>
+              <textarea class="form-control" id="claims_list" name="claims_list" rows="4"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="defenses_list">Affirmative Defenses / Counterclaims</label>
+              <textarea class="form-control" id="defenses_list" name="defenses_list" rows="4"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="remedies_sought">Relief / Remedies Sought</label>
+              <textarea class="form-control" id="remedies_sought" name="remedies_sought" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. DISCOVERY & EVIDENCE -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSeven">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+            7. Discovery & Evidence
+          </button>
+        </h2>
+        <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#miscCaseAccordion">
+          <div class="accordion-body">
+            <h6>Discovery Status</h6>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="discovery_served">Discovery Served by Client</label>
+                <select class="form-select" id="discovery_served" name="discovery_served">
+                  <option value="">Select...</option>
+                  <option>None</option>
+                  <option>Interrogatories</option>
+                  <option>RFP / Production</option>
+                  <option>RFA</option>
+                  <option>Multiple</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="discovery_received">Discovery Served on Client</label>
+                <select class="form-select" id="discovery_received" name="discovery_received">
+                  <option value="">Select...</option>
+                  <option>None</option>
+                  <option>Interrogatories</option>
+                  <option>RFP / Production</option>
+                  <option>RFA</option>
+                  <option>Multiple</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="discovery_deadlines">Discovery Deadlines / Compliance Dates</label>
+                <input type="text" class="form-control" id="discovery_deadlines" name="discovery_deadlines" placeholder="Key dates / notes">
+              </div>
+            </div>
+
+            <h6>Evidence</h6>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_docs" name="evidence_docs">
+                  <label class="form-check-label" for="evidence_docs">Documents / Contracts</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_emails" name="evidence_emails">
+                  <label class="form-check-label" for="evidence_emails">Emails / Texts</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_witnesses" name="evidence_witnesses">
+                  <label class="form-check-label" for="evidence_witnesses">Witness Statements</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_experts" name="evidence_experts">
+                  <label class="form-check-label" for="evidence_experts">Experts / Reports</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_photos" name="evidence_photos">
+                  <label class="form-check-label" for="evidence_photos">Photos / Video</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="evidence_other" name="evidence_other">
+                  <label class="form-check-label" for="evidence_other">Other Critical Evidence</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="evidence_notes">Evidence Notes</label>
+              <textarea class="form-control" id="evidence_notes" name="evidence_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. DEADLINES & EVENTS -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingEight">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+            8. Deadlines & Key Events
+          </button>
+        </h2>
+        <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#miscCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="limitations_deadline">Statute of Limitations / Jurisdictional Deadline</label>
+                <input type="date" class="form-control" id="limitations_deadline" name="limitations_deadline">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="contractual_deadline">Contractual / Administrative Deadline</label>
+                <input type="date" class="form-control" id="contractual_deadline" name="contractual_deadline">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="appeal_deadline">Appeal / Rehearing Deadline</label>
+                <input type="date" class="form-control" id="appeal_deadline" name="appeal_deadline">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="hearing_dates">Upcoming Hearings / Events</label>
+              <textarea class="form-control" id="hearing_dates" name="hearing_dates" rows="3" placeholder="Hearing dates, motion hearings, conferences, etc."></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="deadline_notes">Deadline / Calendar Notes</label>
+              <textarea class="form-control" id="deadline_notes" name="deadline_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. SETTLEMENT / ADR -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingNine">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+            9. Settlement / ADR
+          </button>
+        </h2>
+        <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#miscCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="settlement_posture">Settlement Posture</label>
+                <select class="form-select" id="settlement_posture" name="settlement_posture">
+                  <option value="">Select...</option>
+                  <option>No Discussions</option>
+                  <option>Demand Sent</option>
+                  <option>Offer Received</option>
+                  <option>Active Negotiations</option>
+                  <option>Settled (Pending Docs)</option>
+                  <option>Settled (Closed)</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="demand_amount">Demand Amount</label>
+                <input type="text" class="form-control" id="demand_amount" name="demand_amount">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="offer_amount">Offer Amount</label>
+                <input type="text" class="form-control" id="offer_amount" name="offer_amount">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="adr_type">ADR / Alternative Dispute Resolution</label>
+                <select class="form-select" id="adr_type" name="adr_type">
+                  <option value="">Select...</option>
+                  <option>Mediation</option>
+                  <option>Arbitration</option>
+                  <option>Non-binding Arbitration</option>
+                  <option>Informal Settlement Conference</option>
+                  <option>None</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="adr_date">ADR Date</label>
+                <input type="date" class="form-control" id="adr_date" name="adr_date">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="adr_result">ADR Result</label>
+                <input type="text" class="form-control" id="adr_result" name="adr_result">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="settlement_notes">Settlement / Negotiation Notes</label>
+              <textarea class="form-control" id="settlement_notes" name="settlement_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. BILLING & TRUST -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTen">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+            10. Billing & Trust
+          </button>
+        </h2>
+        <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#miscCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="fee_type">Fee Arrangement</label>
+                <select class="form-select" id="fee_type" name="fee_type">
+                  <option value="">Select...</option>
+                  <option>Hourly</option>
+                  <option>Flat Fee</option>
+                  <option>Contingency</option>
+                  <option>Hybrid</option>
+                  <option>Pro Bono / Reduced</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="retainer_amount">Retainer / Flat Fee Amount</label>
+                <input type="text" class="form-control" id="retainer_amount" name="retainer_amount">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="billing_rate">Hourly Rate (if applicable)</label>
+                <input type="text" class="form-control" id="billing_rate" name="billing_rate">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="trust_balance">Trust Account Balance</label>
+                <input type="text" class="form-control" id="trust_balance" name="trust_balance">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="outstanding_fees">Outstanding Fees</label>
+                <input type="text" class="form-control" id="outstanding_fees" name="outstanding_fees">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="costs_advanced">Costs Advanced</label>
+                <input type="text" class="form-control" id="costs_advanced" name="costs_advanced">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="billing_notes">Billing / Trust Notes</label>
+              <textarea class="form-control" id="billing_notes" name="billing_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. DOCUMENTS CHECKLIST -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingEleven">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+            11. Documents Checklist
+          </button>
+        </h2>
+        <div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven" data-bs-parent="#miscCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_retainer" name="doc_retainer">
+                  <label class="form-check-label" for="doc_retainer">Retainer / Fee Agreement</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_client_intake" name="doc_client_intake">
+                  <label class="form-check-label" for="doc_client_intake">Client Intake Form</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_key_pleadings" name="doc_key_pleadings">
+                  <label class="form-check-label" for="doc_key_pleadings">Key Pleadings Filed</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_evidence_uploaded" name="doc_evidence_uploaded">
+                  <label class="form-check-label" for="doc_evidence_uploaded">Evidence Uploaded / Organized</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_orders" name="doc_orders">
+                  <label class="form-check-label" for="doc_orders">Orders / Judgments on File</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="doc_correspondence" name="doc_correspondence">
+                  <label class="form-check-label" for="doc_correspondence">Important Correspondence Saved</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="document_notes">Document Notes</label>
+              <textarea class="form-control" id="document_notes" name="document_notes" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12. FILE MANAGEMENT -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwelve">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+            12. File Management
+          </button>
+        </h2>
+        <div id="collapseTwelve" class="accordion-collapse collapse" aria-labelledby="headingTwelve" data-bs-parent="#miscCaseAccordion">
+          <div class="accordion-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="assigned_attorney">Assigned Attorney</label>
+                <input type="text" class="form-control" id="assigned_attorney" name="assigned_attorney">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="assigned_paralegal">Assigned Paralegal / Staff</label>
+                <input type="text" class="form-control" id="assigned_paralegal" name="assigned_paralegal">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="file_status">File Status</label>
+                <select class="form-select" id="file_status" name="file_status">
+                  <option value="">Select...</option>
+                  <option>Intake</option>
+                  <option>Active</option>
+                  <option>On Hold</option>
+                  <option>Closed</option>
+                  <option>Archived</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="file_notes">File Notes</label>
+              <textarea class="form-control" id="file_notes" name="file_notes" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="followup_tasks">Follow-Up Tasks / Reminders</label>
+              <textarea class="form-control" id="followup_tasks" name="followup_tasks" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.accordion -->
 
     <button class="btn btn-primary">{{ form.submit.label.text }}</button>
     <a href="{{ url_for('cases_list') }}" class="btn btn-secondary ms-2">Cancel</a>

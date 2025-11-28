@@ -150,6 +150,27 @@ def approve_users():
         return redirect(url_for('approve_users'))
     return render_template('approve.html', pending_users=pending_users, roles=[r for r in UserRole if r != UserRole.superuser and r != UserRole.pending])
 
+@app.route('/settings')
+@login_required
+def settings():
+    # You can restrict to certain roles if needed
+    return render_template('settings.html', user=current_user)
+
+@app.route('/admin/search_users')
+@login_required
+def search_users():
+    if not current_user.is_superuser():
+        flash('Access denied.', 'danger')
+        return redirect(url_for('dashboard'))
+    query = request.args.get('q', '')
+    users = User.query.filter(
+        db.or_(
+            User.name.ilike(f"%{query}%"),
+            User.email.ilike(f"%{query}%"),
+            User.id == query if query.isdigit() else False
+        )
+    ).all()
+    return render_template('admin_dashboard.html', users=users)
 #--- Cases Module ---
 @app.route('/cases')
 @login_required
