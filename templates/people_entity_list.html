@@ -1,12 +1,12 @@
 {% extends "base_team.html" %}
 {% block team_content %}
-  <h2>Clients</h2>
+  <h2>People and Entities</h2>
   <form method="get" class="mb-3 d-flex">
     <input type="text" name="search" class="form-control me-2" placeholder="Search by name, email, or address..." value="{{ search }}">
     <button type="submit" class="btn btn-primary">Search</button>
-    <a href="{{ url_for('clients_list') }}" class="btn btn-secondary ms-2">Clear</a>
+    <a href="{{ url_for('people_entity_list') }}" class="btn btn-secondary ms-2">Clear</a>
   </form>
-  <a href="{{ url_for('client_create') }}" class="btn btn-primary mb-3">New Client</a>
+  <a href="{{ url_for('people_entity_create') }}" class="btn btn-primary mb-3">New Person or Entity</a>
   <table class="table">
     <thead>
       <tr>

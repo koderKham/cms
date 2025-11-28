@@ -1,0 +1,61 @@
+{% extends "base_team.html" %}
+{% block team_content %}
+  <h2>{% if person_entity %}Edit{% else %}Add{% endif %} Person / Entity</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        {{ form.type.label(class="form-label") }}
+        {{ form.type(class="form-select") }}
+      </div>
+      <div class="col-md-8">
+        {{ form.full_name.label(class="form-label") }}
+        {{ form.full_name(class="form-control") }}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        {{ form.business_name.label(class="form-label") }}
+        {{ form.business_name(class="form-control") }}
+      </div>
+      <div class="col-md-6">
+        {{ form.dob.label(class="form-label") }}
+        {{ form.dob(class="form-control") }}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        {{ form.ssn_last4.label(class="form-label") }}
+        {{ form.ssn_last4(class="form-control") }}
+      </div>
+      <div class="col-md-4">
+        {{ form.ein.label(class="form-label") }}
+        {{ form.ein(class="form-control") }}
+      </div>
+      <div class="col-md-4">
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-control") }}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        {{ form.phone.label(class="form-label") }}
+        {{ form.phone(class="form-control") }}
+      </div>
+      <div class="col-md-6">
+        {{ form.address.label(class="form-label") }}
+        {{ form.address(class="form-control") }}
+      </div>
+    </div>
+    <div class="mb-3">
+      {{ form.notes.label(class="form-label") }}
+      {{ form.notes(class="form-control", rows=3) }}
+    </div>
+
+    <div class="mt-4">
+      {{ form.submit(class="btn btn-primary") }}
+      <button type="reset" class="btn btn-secondary">Reset</button>
+    </div>
+  </form>
+{% endblock %}

@@ -32,14 +32,59 @@ class User(UserMixin, db.Model):
     def is_superuser(self):
         return self.role == UserRole.superuser
 
+class PartyType(enum.Enum):
+    INDIVIDUAL = "individual"
+    COMPANY = "company"
+    GOVERNMENT = "government"
+    TRUST = "trust"
+    ESTATE = "estate"
+    OTHER = "other"
+
+class PersonEntity(db.Model):
+    __tablename__ = "person_entity"
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.Enum(PartyType), nullable=False, default=PartyType.INDIVIDUAL)
+    full_name = db.Column(db.String(150), nullable=False)
+    business_name = db.Column(db.String(150), nullable=True)
+    dob = db.Column(db.Date, nullable=True)
+    ssn_last4 = db.Column(db.String(4), nullable=True)
+    ein = db.Column(db.String(10), nullable=True)
+    email = db.Column(db.String(120), nullable=True)
+    phone = db.Column(db.String(50), nullable=True)
+    address = db.Column(db.String(200), nullable=True)
+    notes = db.Column(db.Text, nullable=True)
+    # Add extra fields as needed for special party types (e.g. estate, trust)
+    # e.g. for trust: trust_contact, for estate: decedent info
+
+class CasePartyRole(enum.Enum):
+    CLIENT = "client"
+    DEFENDANT = "defendant"
+    PLAINTIFF = "plaintiff"
+    VICTIM = "victim"
+    BENEFICIARY = "beneficiary"
+    EXECUTOR = "executor"
+    GUARDIAN = "guardian"
+    OPPOSING_PARTY = "opposing_party"
+    WITNESS = "witness"
+    OTHER = "other"
+
+class CaseParty(db.Model):
+    __tablename__ = "case_party"
+    id = db.Column(db.Integer, primary_key=True)
+    case_id = db.Column(db.Integer, db.ForeignKey("case.id"), nullable=False)
+    person_entity_id = db.Column(db.Integer, db.ForeignKey("person_entity.id"), nullable=False)
+    role = db.Column(db.Enum(CasePartyRole), nullable=False)
+    notes = db.Column(db.Text, nullable=True)
+
+    case = db.relationship("Case", back_populates="parties")
+    person_entity = db.relationship("PersonEntity")
+
 class Case(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-
-
+    parties = db.relationship("CaseParty", back_populates="case", cascade="all, delete-orphan")
     # -----------------------
     # Personal Injury fields
     # -----------------------
-    class Case(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     style = db.Column(db.String(200), nullable=False)
     case_number = db.Column(db.String(100), unique=True, nullable=False)

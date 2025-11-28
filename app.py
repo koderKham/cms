@@ -1,8 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, flash, request, send_from_directory, abort, render_template_string, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user, UserMixin
-from models import db, User, UserRole, Case, Client, Document, CalendarEvent, Note, Template
-from forms import SignUpForm, LoginForm, CaseForm, ClientForm, CalendarEventForm,  TemplateForm, GenerateDocumentForm, DocumentForm
+from models import db, User, UserRole, Case, Client, Document, CalendarEvent, Note, Template, PersonEntity
+from forms import SignUpForm, LoginForm, CaseForm, ClientForm, CalendarEventForm,  TemplateForm, GenerateDocumentForm, DocumentForm, PartyForm
 import datetime
 from datetime import timedelta
 from werkzeug.utils import secure_filename
@@ -248,49 +248,48 @@ def case_delete(case_id):
     flash('Case deleted.', 'info')
     return redirect(url_for('cases_list'))
 
-@app.route('/clients')
+@app.route('/people_entity')
 @login_required
-def clients_list():
-    clients = Client.query.all()
-    return render_template('clients_list.html', clients=clients)
+def people_entity_list():
+    people_entity = PersonEntity.query.all()
+    return render_template('people_entity_list.html', people_entity=people_entity)
 
-
-@app.route('/clients/create', methods=['GET', 'POST'])
+@app.route('/people_entity/create', methods=['GET', 'POST'])
 @login_required
-def client_create():
-    form = ClientForm()
+def people_entity_create():
+    form = PartyForm()
     if form.validate_on_submit():
-        new_client = Client(
+        new_people_entity = Client(
             name=form.name.data,
             email=form.email.data,
             address=form.address.data
         )
-        db.session.add(new_client)
+        db.session.add(new_people_entity)
         db.session.commit()
         flash('Client created!', 'success')
-        return redirect(url_for('clients_list'))
-    return render_template('client_form.html', form=form)
+        return redirect(url_for('people_entity_list'))
+    return render_template('people_entity_form.html', form=form)
 
-@app.route('/clients/<int:client_id>/edit', methods=['GET', 'POST'])
+@app.route('/people_entity/<int:people_entity_id>/edit', methods=['GET', 'POST'])
 @login_required
-def client_edit(client_id):
-    client = Client.query.get_or_404(client_id)
+def people_entity_edit(client_id):
+    people_entity = PersonEntity.query.get_or_404(client_id)
     form = ClientForm(obj=client)
     if form.validate_on_submit():
-        form.populate_obj(client)
+        form.populate_obj(people_entity)
         db.session.commit()
-        flash('Client updated!', 'success')
-        return redirect(url_for('clients_list'))
-    return render_template('client_form.html', form=form, client=client)
+        flash('Updated!', 'success')
+        return redirect(url_for('people_entity'))
+    return render_template('people_entity_form.html', form=form, client=client)
 
-@app.route('/clients/<int:client_id>/delete', methods=['POST'])
+@app.route('/people_entity/<int:people_entity_id>/delete', methods=['POST'])
 @login_required
-def client_delete(client_id):
-    client = Client.query.get_or_404(client_id)
-    db.session.delete(client)
+def people_entity_delete(client_id):
+    people_entity = PersonEntity.query.get_or_404(client_id)
+    db.session.delete(people_entity)
     db.session.commit()
-    flash('Client deleted.', 'info')
-    return redirect(url_for('clients_list'))
+    flash('Data deleted.', 'info')
+    return redirect(url_for('people_entity_list'))
 
 @app.route('/clients/<int:client_id>')
 @login_required
@@ -298,7 +297,7 @@ def client_detail(client_id):
     client = Client.query.get_or_404(client_id)
     cases = client.cases
     documents = client.documents
-    return render_template('client_detail.html', client=client, cases=cases, documents=documents)
+    return render_template('people_entity_detail.html', client=client, cases=cases, documents=documents)
 
 @app.route('/documents')
 @login_required

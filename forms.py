@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, SelectField, PasswordField, DateTimeField, SubmitField, FileField, TextAreaField, BooleanField, RadioField
+from wtforms import StringField, DateField, SelectField, PasswordField, DateTimeField, SubmitField, FileField, TextAreaField, BooleanField, EmailField, FieldList, FormField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Optional
 import datetime
 now = datetime.datetime.utcnow()
@@ -18,6 +18,29 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email(), Length(max=120)])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+# --- PartyForm ---
+class PartyForm(FlaskForm):
+    type = SelectField("Type", choices=[
+        ("individual", "Individual"), ("company", "Company"), ("government", "Government"),
+        ("trust", "Trust"), ("estate", "Estate"), ("other", "Other")
+    ])
+    full_name = StringField("Full Name")
+    business_name = StringField("Business Name")
+    dob = DateField("Date of Birth")
+    ssn_last4 = StringField("SSN (Last 4)")
+    ein = StringField("EIN (for orgs)")
+    email = StringField("Email")
+    phone = StringField("Phone")
+    address = StringField("Address")
+    notes = TextAreaField("Party Notes")
+
+    role = SelectField("Role In Case", choices=[
+        ("client", "Client"), ("defendant", "Defendant"), ("plaintiff", "Plaintiff"),
+        ("victim", "Victim"), ("beneficiary", "Beneficiary"), ("executor", "Executor"),
+        ("guardian", "Guardian"), ("opposing_party", "Opposing Party"), ("witness", "Witness"), ("other", "Other")
+    ])
+    case_role_notes = TextAreaField("Role Notes")
+    submit = SubmitField("Save")
 
 # --- CaseForm (excerpt) ---
 # Update your CaseForm in forms.py to include the criminal fields.
@@ -30,8 +53,8 @@ class CaseForm(FlaskForm):
         ('estate', 'Probate / Estate Planning'),
         ('other', 'Other / General Matter'),
     ]
-
-
+    case_type = SelectField('Select Type of Case', choices=CASE_TYPE_CHOICES)
+    parties = FieldList(FormField(PartyForm), min_entries=1)
     # -----------------------
     # Personal Injury
     # -----------------------
@@ -39,7 +62,7 @@ class CaseForm(FlaskForm):
         # Core Case Info
     case_title = StringField("Case Title")
     case_number_internal = StringField("Case Number (Internal)")
-    case_type = SelectField("Case Type", choices=[
+    pi_case_type = SelectField("Case Type", choices=[
         ("", ""),
         ("Auto Accident", "Auto Accident"),
         ("Slip & Fall", "Slip & Fall"),
@@ -214,7 +237,7 @@ class CaseForm(FlaskForm):
         ("", ""), ("Felony", "Felony"), ("Misdemeanor", "Misdemeanor"), ("Juvenile", "Juvenile"),
         ("Traffic Criminal", "Traffic Criminal"), ("Violation of Probation", "Violation of Probation")
     ])
-    case_type = SelectField("Case Type", choices=[
+    crim_case_type = SelectField("Case Type", choices=[
         ("", ""), ("Drug Offense", "Drug Offense"), ("Violent Crime", "Violent Crime"),
         ("Theft / Property", "Theft / Property"), ("DUI", "DUI"), ("Domestic Violence", "Domestic Violence"),
         ("Sex Offense", "Sex Offense"), ("Weapons / Firearm", "Weapons / Firearm"), ("Other", "Other")
@@ -358,7 +381,7 @@ class CaseForm(FlaskForm):
     court_case_number = StringField("Court Case #")
     internal_case_number = StringField("Internal Case #")
     jurisdiction = StringField("Jurisdiction (County / Division)")
-    case_type = SelectField("Case Type", choices=[
+    estate_case_type = SelectField("Case Type", choices=[
         ("", ""), ("Formal Administration", "Formal Administration"),
         ("Summary Administration", "Summary Administration"),
         ("Ancillary Administration", "Ancillary Administration"),
@@ -739,6 +762,10 @@ class CaseForm(FlaskForm):
     ])
     file_notes = TextAreaField("File Notes")
     followup_tasks = TextAreaField("Follow-Up Tasks / Reminders")
+
+    # ... other fields ...
+    client_id = SelectField("Client", coerce=int)
+    user_id = SelectField("Assigned Attorney", coerce=int)
 
     submit = SubmitField('Save Case')
 
