@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Law Firm CMS{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    {% block head %}{% endblock %}
+    <style>
+        body { background: #f8f9fa; }
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 1040;
+            width: 240px;
+            transition: width 0.3s;
+            background: #fff;
+            border-right: 1px solid #e3e3e3;
+        }
+        .sidebar.collapsed { width: 56px; }
+        .sidebar .sidebar-toggle {
+            width: 100%;
+            text-align: right;
+            background: #0d6efd;
+            color: white;
+            padding: 0.75rem 1rem;
+            font-size: 1.2em;
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+        .sidebar .sidebar-header {
+            padding: 0.5em 1em;
+            background: #0d6efd;
+            color: #fff;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .sidebar .list-group-item {
+            border: none;
+            padding-left: 1.5rem;
+            font-size: 1.09em;
+        }
+        .sidebar.collapsed .list-group-item span {
+            display: none;
+        }
+        .sidebar.collapsed .list-group-item {
+            text-align: center;
+            padding-left: 0.4em !important;
+        }
+        .main-content {
+            margin-left: 240px;
+            transition: margin-left 0.3s;
+        }
+        .main-content.collapsed {
+            margin-left: 56px;
+        }
+    </style>
+</head>
+<body>
+    {% block sidebar %}
+    <div class="sidebar d-flex flex-column" id="layoutSidebar">
+        <div class="sidebar-header"></div>
+        <button class="sidebar-toggle" onclick="toggleSidebar()">
+            <i class="bi bi-list"></i>
+        </button>
+        <div class="flex-grow-1">
+            <div class="list-group list-group-flush">
+                {% block sidebar_items %}
+                <a href="{{ url_for('documents_list') }}" class="list-group-item"><i class="bi bi-file-earmark-text"></i> <span>Documents</span></a>
+                <a href="{{ url_for('notes_list') }}" class="list-group-item"><i class="bi bi-stickies"></i> <span>Notes</span></a>
+                <a href="{{ url_for('settings') }}" class="list-group-item"><i class="bi bi-gear"></i> <span>Settings</span></a>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="topNavbar" style="margin-left:240px;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('dashboard') }}">Law Firm CMS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarTop" aria-controls="navbarTop"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTop">
+                <ul class="navbar-nav ms-auto">
+                    {% block navbar_items %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('cases_list') }}">Cases</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('people_entity_list') }}">People/Entities</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('calendar_month') }}">Calendar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+                    {% endblock %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% endblock %}
+
+    <main class="main-content pt-4" id="mainLayoutContent">
+        {% block messages %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-info">
+                    {% for category, message in messages %}
+                        <div>{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% endblock %}
+        {% block content %}{% endblock %}
+    </main>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('layoutSidebar');
+            var content = document.getElementById('mainLayoutContent');
+            var navbar = document.getElementById('topNavbar');
+            sidebar.classList.toggle('collapsed');
+            content.classList.toggle('collapsed');
+            if (sidebar.classList.contains('collapsed')) {
+                navbar.style.marginLeft = '56px';
+            } else {
+                navbar.style.marginLeft = '240px';
+            }
+        }
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

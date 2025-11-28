@@ -1,68 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{% block title %}Law Firm CMS{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.2/dist/css/tempus-dominus.min.css">
+{% extends "base_layout.html" %}
 
-</head>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.2/dist/js/tempus-dominus.min.js"></script>
-<body>
+{% block title %}Law Firm CMS - Team{% endblock %}
 
-<style>
-    body {
-      background: #f8f9fa;
-      margin: 0;
-    }
-    .content-team {
-        padding: 2rem;
-        background: #fff;
-        min-height: 80vh;
-        width: 100vw;
-        margin: 0;
-        max-width: 100vw;
-    }
-    @media (max-width: 768px) {
-        .content-team { padding: 1rem; }
-    }
-</style>
+{% block sidebar_items %}
+    <a href="{{ url_for('documents_list') }}" class="list-group-item"><i class="bi bi-file-earmark-text"></i> <span>Documents</span></a>
+    <a href="{{ url_for('notes_list') }}" class="list-group-item"><i class="bi bi-stickies"></i> <span>Notes</span></a>
+    <a href="{{ url_for('settings') }}" class="list-group-item"><i class="bi bi-gear"></i> <span>Settings</span></a>
+    {# Add team-specific sidebar items here if necessary #}
+{% endblock %}
+
+{% block navbar_items %}
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('cases_list') }}">Cases</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('people_entity_list') }}">People/Entities</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('calendar_month') }}">Calendar</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+{% endblock %}
+
 {% block content %}
-<!-- Top navbar (only once) -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-0">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('dashboard') }}">Law Firm CMS</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarTop" aria-controls="navbarTop"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTop">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('cases_list') }}">Cases</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('people_entity_list') }}">People/Entities</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('documents_list') }}">Documents</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('notes_list') }}">Notes</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('calendar_month') }}">Calendar</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('settings') }}">Settings</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<!-- Main content takes full width -->
-<main class="content-team">
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <div class="alert alert-info">
-        {% for category, message in messages %}
-          <div>{{ message }}</div>
-        {% endfor %}
-      </div>
-    {% endif %}
-  {% endwith %}
-  {% block team_content %}{% endblock %}
-</main>
+    {% block team_content %}
+    <!-- Team-specific content goes here -->
+    {% endblock %}
 {% endblock %}

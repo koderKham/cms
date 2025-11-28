@@ -256,18 +256,30 @@ def people_entity_list():
 
 @app.route('/people_entity/create', methods=['GET', 'POST'])
 @login_required
-def people_entity_create():
+def create_people_entity():
     form = PartyForm()
     if form.validate_on_submit():
-        new_people_entity = Client(
-            name=form.name.data,
-            email=form.email.data,
-            address=form.address.data
-        )
-        db.session.add(new_people_entity)
-        db.session.commit()
-        flash('Client created!', 'success')
-        return redirect(url_for('people_entity_list'))
+        try:
+            person_entity = PersonEntity(
+                type=form.type.data,
+                full_name=form.full_name.data.strip() if form.full_name.data else None,
+                business_name=form.business_name.data.strip() if form.business_name.data else None,
+                dob=form.dob.data,
+                ssn_last4=form.ssn_last4.data.strip() if form.ssn_last4.data else None,
+                ein=form.ein.data.strip() if form.ein.data else None,
+                email=form.email.data.strip() if form.email.data else None,
+                phone=form.phone.data.strip() if form.phone.data else None,
+                address=form.address.data.strip() if form.address.data else None,
+                notes=form.notes.data.strip() if form.notes.data else None
+            )
+            db.session.add(person_entity)
+            db.session.commit()
+            flash('Client created successfully!', 'success')
+            return redirect(url_for('people_entity_list'))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error creating client: {str(e)}', 'danger')
+        redirect(url_for('people_entity_list'))
     return render_template('people_entity_form.html', form=form)
 
 @app.route('/people_entity/<int:people_entity_id>/edit', methods=['GET', 'POST'])
